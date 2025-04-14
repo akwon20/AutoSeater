@@ -9,10 +9,9 @@ import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 
-
 public class Assigner {
 
-    public static void assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
+    public static IntVar[][] assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
         Model model = new Model("Seating Assignment");
 
         IntVar[][] seat = new IntVar[rows][cols];
@@ -99,21 +98,26 @@ public class Assigner {
         }
 
         Solver solver = model.getSolver();
+        // Solution solution;
         SecureRandom random = new SecureRandom();
 
         int count = 0;
+        IntVar[][] solution = null;
 
         while (solver.solve()) {
             count++;
 
             if (random.nextBoolean()) {
+
+                // solution = new Solution(model).record();
                 System.out.println("Example solution: ");
-                for (int i = 0; i < rows; i++) {
-                    for (int j = 0; j < cols; j++) {
-                        System.out.print(seat[i][j].getValue() + " ");
-                    }
-                    System.out.println();
-                }
+                solution = seat;
+                // for (int i = 0; i < rows; i++) {
+                //     for (int j = 0; j < cols; j++) {
+                //         System.out.print(seat[i][j].getValue() + " ");
+                //     }
+                //     System.out.println();
+                // }
                 break;
             }
         }
@@ -124,5 +128,7 @@ public class Assigner {
         else {
             System.out.println("Total solutions found so far: " + count);
         }
+
+        return solution;
     }
 }
