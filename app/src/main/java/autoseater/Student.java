@@ -15,6 +15,14 @@ public class Student {
         this.name = name;
     }
 
+    public void setIdNum(int idNum) {
+        this.idNum = idNum;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getIdNum() {
         return this.idNum;
     }
