@@ -3,6 +3,10 @@
  */
 package autoseater;
 
+import java.util.List;
+
+import org.chocosolver.solver.variables.IntVar;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +14,23 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+
+        Assigner assigner = new Assigner();
+
+        int countStudent, countRows, countCols, countConstr, countAllow = 0;
+        IntVar[][] seats;
+        List<Integer[]> pairsForbidden = null;
+        List<Integer[]> pairsAllowed = null;
+
+        countStudent = 9;
+
+        countRows = 3;
+        countCols = 3;
+
+        Student[] student = new Student[countStudent];
+
+        seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
+
+
     }
 }

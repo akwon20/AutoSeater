@@ -11,7 +11,7 @@ import org.chocosolver.solver.variables.IntVar;
 
 public class Assigner {
 
-    public static IntVar[][] assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
+    public IntVar[][] assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
         Model model = new Model("Seating Assignment");
 
         IntVar[][] seat = new IntVar[rows][cols];
@@ -22,7 +22,7 @@ public class Assigner {
             }
         }
 
-        IntVar[][] flatMatrix = new IntVar[rows * cols];
+        IntVar[] flatMatrix = new IntVar[rows * cols];
         int flat_index = 0;
 
         for (int i = 0; i < rows; i++) {
@@ -108,16 +108,7 @@ public class Assigner {
             count++;
 
             if (random.nextBoolean()) {
-
-                // solution = new Solution(model).record();
-                System.out.println("Example solution: ");
                 solution = seat;
-                // for (int i = 0; i < rows; i++) {
-                //     for (int j = 0; j < cols; j++) {
-                //         System.out.print(seat[i][j].getValue() + " ");
-                //     }
-                //     System.out.println();
-                // }
                 break;
             }
         }
