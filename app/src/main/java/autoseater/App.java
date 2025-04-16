@@ -32,7 +32,7 @@ public class App {
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
 
-        int countStudent, countRows, countCols, countConst, countAllow;
+        int countStudent, countRows, countCols, countConst, countAdj;
         IntVar[][] seats;
         List<Student> students = new ArrayList<>();
         // List<Integer[]> pairsForbidden = new ArrayList();
@@ -68,10 +68,10 @@ public class App {
         countConst = setCount(scanner);
 
         System.out.println("Enter the adjacent seatings: ");
-        countAllow = setCount(scanner);
+        countAdj = setCount(scanner);
 
         System.out.println("Number of constraints: " + countConst);
-        System.out.println("Number of adjacent seatings: " + countAllow);
+        System.out.println("Number of adjacent seatings: " + countAdj);
 
         for (int j = 0; j < students.size(); j++) {
             System.out.println(students.get(j).getName());
