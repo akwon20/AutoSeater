@@ -28,9 +28,17 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         // Assigner assigner = new Assigner();
 
-        System.out.println("Enter the number of students: ");
-        countStudent = scanner.nextInt();
-        scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("Enter the number of students: ");
+                countStudent = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Try again.");
+            }
+        }
+
+        // scanner.nextLine();
 
         // countRows = scanner.nextInt();
         // countCols = scanner.nextInt();
@@ -40,12 +48,27 @@ public class App {
             String name = scanner.nextLine();
             students.add(new Student(i, name));
         }
-        scanner.close();
+
+        while (true) {
+            try {
+                System.out.println("Enter the number of rows: ");
+                countRows = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter the number of columns: ");
+                countCols = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Try again.");
+            }
+        }
+
+        System.out.println("Number of rows: " + countRows);
+        System.out.println("Number of columns: " + countCols);
 
         for (int j = 0; j < students.size(); j++) {
             System.out.println(students.get(j).getName());
         }
 
+        scanner.close();
         // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
     }
 }
