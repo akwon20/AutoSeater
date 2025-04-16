@@ -7,13 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-
 import org.chocosolver.solver.variables.IntVar;
 
 public class App {
     public String getGreeting() {
         return "Hello World!";
+    }
+
+    public static int setCount(Scanner scanner) {
+        int count;
+        while (true) {
+            try {
+                System.out.println("Enter the number of rows: ");
+                count = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Try again.");
+            }
+        }
+
+        return count;
     }
 
     public static void main(String[] args) {
@@ -28,15 +41,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         // Assigner assigner = new Assigner();
 
-        while (true) {
-            try {
-                System.out.println("Enter the number of students: ");
-                countStudent = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Try again.");
-            }
-        }
+        System.out.println("Enter the number of students: ");
+        countStudent = setCount(scanner);
 
         // scanner.nextLine();
 
@@ -49,17 +55,11 @@ public class App {
             students.add(new Student(i, name));
         }
 
-        while (true) {
-            try {
-                System.out.println("Enter the number of rows: ");
-                countRows = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter the number of columns: ");
-                countCols = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Try again.");
-            }
-        }
+        System.out.println("Enter the number of rows: ");
+        countRows = setCount(scanner);
+
+        System.out.println("Enter the number of columns: ");
+        countCols = setCount(scanner);
 
         System.out.println("Number of rows: " + countRows);
         System.out.println("Number of columns: " + countCols);
