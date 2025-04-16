@@ -121,14 +121,21 @@ public class App {
 
         pairsForbidden = setSeatingPairs(students, countConst);
 
-        for (String[] pair : pairsForbidden) {
-            String val1 = pair[0];
-            String val2 = pair[1];
+        for (String[] forbidden_pair : pairsForbidden) {
+            String forbidden_val1 = forbidden_pair[0];
+            String forbidden_val2 = forbidden_pair[1];
 
-            System.out.println("Constraint: {" + val1 + ", " + val2 + "}");
+            System.out.println("Constraint: {" + forbidden_val1 + ", " + forbidden_val2 + "}");
         }
 
-        // TODO: Adjacency rules
+        pairsAllowed = setSeatingPairs(students, countAdj);
+
+        for (String[] allowed_pair: pairsAllowed) {
+            String allowed_val1 = allowed_pair[0];
+            String allowed_val2 = allowed_pair[1];
+
+            System.out.println("Adjacency: {" + allowed_val1 + ", " + allowed_val2 + "}");
+        }
 
         scanner.close();
         // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
