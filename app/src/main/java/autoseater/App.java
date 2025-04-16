@@ -35,8 +35,8 @@ public class App {
         int countStudent, countRows, countCols, countConst, countAdj;
         IntVar[][] seats;
         List<Student> students = new ArrayList<>();
-        // List<Integer[]> pairsForbidden = new ArrayList();
-        // List<Integer[]> pairsAllowed = new ArrayList();
+        List<Student[]> pairsForbidden = new ArrayList<Student[]>();
+        List<Student[]> pairsAllowed = new ArrayList<Student[]>();
 
         Scanner scanner = new Scanner(System.in);
         // Assigner assigner = new Assigner();
