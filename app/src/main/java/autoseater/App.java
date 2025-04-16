@@ -123,7 +123,14 @@ public class App {
             System.out.println(students.get(j).getName());
         }
 
-        pairsForbidden = setSeatingPairs(students, countAdj);
+        pairsForbidden = setSeatingPairs(students, countConst);
+
+        for (String[] pair : pairsForbidden) {
+            String val1 = pair[0];
+            String val2 = pair[1];
+
+            System.out.println("Constraint: {" + val1 + ", " + val2 + "}");
+        }
 
         // TODO: Adjacency rules
 
