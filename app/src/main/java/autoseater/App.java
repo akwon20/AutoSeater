@@ -31,15 +31,41 @@ public class App {
         return count;
     }
 
+    public static String inputName(List<Student> studentList) {
+        String name = "";
+        Boolean nameFound = false;
+
+        while (true) {
+            name = scanner.nextLine();
+
+            for (Student student : studentList) {
+                if (student.getName().equals(name)) {
+                    nameFound = true;
+                    break;
+                }
+            }
+
+            if (!nameFound) {
+                System.out.println("Student not found! Try again.");
+            }
+            else {
+                break;
+            }
+        }
+
+        return name;
+    }
+
     public static List<String[]> setSeatingPairs(List<Student> studentList, int size) {
         List<String[]> rules = new ArrayList<String[]>();
 
         for (int i = 0; i < size; i++) {
             System.out.println("Constraint " + i);
             System.out.println("Enter Name 1: ");
-            String name1 = scanner.nextLine();
+            String name1 = inputName(studentList);
+
             System.out.println("Enter Name 2: ");
-            String name2 = scanner.nextLine();
+            String name2 = inputName(studentList);
 
             String[] pair = {name1, name2};
 
@@ -54,9 +80,9 @@ public class App {
 
         int countStudent, countRows, countCols, countConst, countAdj;
         IntVar[][] seats;
-        List<Student> students = new ArrayList<>();
-        List<Student[]> pairsForbidden = new ArrayList<Student[]>();
-        List<Student[]> pairsAllowed = new ArrayList<Student[]>();
+        List<Student> students = new ArrayList<Student>();
+        List<String[]> pairsForbidden = new ArrayList<String[]>();
+        List<String[]> pairsAllowed = new ArrayList<String[]>();
 
         scanner = new Scanner(System.in);
         // Assigner assigner = new Assigner();
@@ -97,23 +123,9 @@ public class App {
             System.out.println(students.get(j).getName());
         }
 
-        for (int k = 0; k < countConst; k++) {
-            System.out.println("Constraint " + k);
-            System.out.println("Enter name 1: ");
-            String name1 = scanner.nextLine();
+        pairsForbidden = setSeatingPairs(students, countAdj);
 
-            System.out.println("Enter name 2: ");
-            String name2 = scanner.nextLine();
-        }
-
-        for (int k = 0; k < countConst; k++) {
-            System.out.println("Constraint " + k);
-            System.out.println("Enter name 1: ");
-            String name1 = scanner.nextLine();
-
-            System.out.println("Enter name 2: ");
-            String name2 = scanner.nextLine();
-        }
+        // TODO: Adjacency rules
 
         scanner.close();
         // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
