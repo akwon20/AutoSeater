@@ -21,7 +21,6 @@ public class App {
         int count;
         while (true) {
             try {
-                System.out.println("Enter : ");
                 count = Integer.parseInt(scanner.nextLine());
                 break;
             } catch (NumberFormatException e) {
