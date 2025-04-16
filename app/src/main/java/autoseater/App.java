@@ -10,11 +10,14 @@ import java.util.Scanner;
 import org.chocosolver.solver.variables.IntVar;
 
 public class App {
+
+    static Scanner scanner;
+
     public String getGreeting() {
         return "Hello World!";
     }
 
-    public static int setCount(Scanner scanner) {
+    public static int setCount() {
         int count;
         while (true) {
             try {
@@ -29,7 +32,7 @@ public class App {
         return count;
     }
 
-    public static List<String[]> setSeatingPairs(Scanner scanner, List<Student> studentList, int size) {
+    public static List<String[]> setSeatingPairs(List<Student> studentList, int size) {
         List<String[]> rules = new ArrayList<String[]>();
 
         for (int i = 0; i < size; i++) {
@@ -56,11 +59,11 @@ public class App {
         List<Student[]> pairsForbidden = new ArrayList<Student[]>();
         List<Student[]> pairsAllowed = new ArrayList<Student[]>();
 
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         // Assigner assigner = new Assigner();
 
         System.out.println("Enter the number of students: ");
-        countStudent = setCount(scanner);
+        countStudent = setCount();
 
         // scanner.nextLine();
 
@@ -74,19 +77,19 @@ public class App {
         }
 
         System.out.println("Enter the number of rows: ");
-        countRows = setCount(scanner);
+        countRows = setCount();
 
         System.out.println("Enter the number of columns: ");
-        countCols = setCount(scanner);
+        countCols = setCount();
 
         System.out.println("Number of rows: " + countRows);
         System.out.println("Number of columns: " + countCols);
 
         System.out.println("Enter the number of constraints: ");
-        countConst = setCount(scanner);
+        countConst = setCount();
 
         System.out.println("Enter the adjacent seatings: ");
-        countAdj = setCount(scanner);
+        countAdj = setCount();
 
         System.out.println("Number of constraints: " + countConst);
         System.out.println("Number of adjacent seatings: " + countAdj);
