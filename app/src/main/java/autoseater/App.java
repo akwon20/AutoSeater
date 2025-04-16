@@ -3,7 +3,11 @@
  */
 package autoseater;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 import org.chocosolver.solver.variables.IntVar;
 
@@ -15,22 +19,33 @@ public class App {
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
 
-        Assigner assigner = new Assigner();
-
-        int countStudent, countRows, countCols, countConstr, countAllow = 0;
+        int countStudent, countRows, countCols;
         IntVar[][] seats;
-        List<Integer[]> pairsForbidden = null;
-        List<Integer[]> pairsAllowed = null;
+        List<Student> students = new ArrayList<>();
+        // List<Integer[]> pairsForbidden = new ArrayList();
+        // List<Integer[]> pairsAllowed = new ArrayList();
 
-        countStudent = 9;
+        Scanner scanner = new Scanner(System.in);
+        // Assigner assigner = new Assigner();
 
-        countRows = 3;
-        countCols = 3;
+        System.out.println("Enter the number of students: ");
+        countStudent = scanner.nextInt();
+        scanner.nextLine();
 
-        Student[] student = new Student[countStudent];
+        // countRows = scanner.nextInt();
+        // countCols = scanner.nextInt();
 
-        seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
+        for (int i = 0; i < countStudent; i++) {
+            System.out.println("Enter name for Student " + i + ": ");
+            String name = scanner.nextLine();
+            students.add(new Student(i, name));
+        }
+        scanner.close();
 
+        for (int j = 0; j < students.size(); j++) {
+            System.out.println(students.get(j).getName());
+        }
 
+        // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
     }
 }
