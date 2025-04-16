@@ -18,7 +18,7 @@ public class App {
         int count;
         while (true) {
             try {
-                System.out.println("Enter the number of rows: ");
+                System.out.println("Enter : ");
                 count = Integer.parseInt(scanner.nextLine());
                 break;
             } catch (NumberFormatException e) {
@@ -27,6 +27,24 @@ public class App {
         }
 
         return count;
+    }
+
+    public static List<String[]> setSeatingPairs(Scanner scanner, List<Student> studentList, int size) {
+        List<String[]> rules = new ArrayList<String[]>();
+
+        for (int i = 0; i < size; i++) {
+            System.out.println("Constraint " + i);
+            System.out.println("Enter Name 1: ");
+            String name1 = scanner.nextLine();
+            System.out.println("Enter Name 2: ");
+            String name2 = scanner.nextLine();
+
+            String[] pair = {name1, name2};
+
+            rules.add(pair);
+        }
+
+        return rules;
     }
 
     public static void main(String[] args) {
