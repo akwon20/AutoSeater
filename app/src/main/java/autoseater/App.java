@@ -77,6 +77,24 @@ public class App {
             System.out.println(students.get(j).getName());
         }
 
+        for (int k = 0; k < countConst; k++) {
+            System.out.println("Constraint " + k);
+            System.out.println("Enter name 1: ");
+            String name1 = scanner.nextLine();
+
+            System.out.println("Enter name 2: ");
+            String name2 = scanner.nextLine();
+        }
+
+        for (int k = 0; k < countConst; k++) {
+            System.out.println("Constraint " + k);
+            System.out.println("Enter name 1: ");
+            String name1 = scanner.nextLine();
+
+            System.out.println("Enter name 2: ");
+            String name2 = scanner.nextLine();
+        }
+
         scanner.close();
         // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
     }
