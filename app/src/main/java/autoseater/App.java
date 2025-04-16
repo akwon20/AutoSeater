@@ -19,6 +19,7 @@ public class App {
 
     public static int setCount() {
         int count;
+
         while (true) {
             try {
                 count = Integer.parseInt(scanner.nextLine());
@@ -89,11 +90,6 @@ public class App {
 
         System.out.println("Enter the number of students: ");
         countStudent = setCount();
-
-        // scanner.nextLine();
-
-        // countRows = scanner.nextInt();
-        // countCols = scanner.nextInt();
 
         for (int i = 0; i < countStudent; i++) {
             System.out.println("Enter name for Student " + i + ": ");
