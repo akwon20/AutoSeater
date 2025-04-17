@@ -130,7 +130,7 @@ public class App {
 
         pairsAllowed = setSeatingPairs(students, countAdj);
 
-        for (String[] allowed_pair: pairsAllowed) {
+        for (String[] allowed_pair : pairsAllowed) {
             String allowed_val1 = allowed_pair[0];
             String allowed_val2 = allowed_pair[1];
 
