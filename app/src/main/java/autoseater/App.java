@@ -86,7 +86,7 @@ public class App {
         List<String[]> pairsAllowed = new ArrayList<String[]>();
 
         scanner = new Scanner(System.in);
-        // Assigner assigner = new Assigner();
+        Assigner assigner = new Assigner();
 
         System.out.println("Enter the number of students: ");
         countStudent = setCount();

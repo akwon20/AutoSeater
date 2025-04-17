@@ -9,8 +9,15 @@ import org.chocosolver.solver.variables.IntVar;
 
 public class Assigner {
 
+    private Model model;
+
+    public Assigner() {
+        // System.out.println("Assigner() Constructor called!");
+        model = new Model("Seating Assignment");
+    }
+
     public IntVar[][] assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
-        Model model = new Model("Seating Assignment");
+        // Model model = new Model("Seating Assignment");
 
         IntVar[][] seat = new IntVar[rows][cols];
 
