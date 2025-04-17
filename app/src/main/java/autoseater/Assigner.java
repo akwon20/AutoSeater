@@ -17,7 +17,6 @@ public class Assigner {
     }
 
     public IntVar[][] assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
-        // Model model = new Model("Seating Assignment");
 
         IntVar[][] seat = new IntVar[rows][cols];
 
