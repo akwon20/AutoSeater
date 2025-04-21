@@ -18,12 +18,12 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
-    private void createConstraints(List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
+    private void createRestrictions(List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
         for (Integer[] pair_forbidden : pairsForbidden) {
             int val_forbidden1 = pair_forbidden[0];
             int val_forbidden2 = pair_forbidden[1];
 
-            System.out.println("Adding constraint for pair {" + val_forbidden1 + ", " + val_forbidden2 + "}...");
+            System.out.println("Adding restrictions for pair {" + val_forbidden1 + ", " + val_forbidden2 + "}...");
 
             for (int r = 0; r < rows; r++) {
                 for (int k = 0; k < cols; k++) {
@@ -149,7 +149,7 @@ public class Assigner {
             System.out.println();
         }
 
-        createConstraints(pairsForbidden, rows, cols, seat);
+        createRestrictions(pairsForbidden, rows, cols, seat);
         createAdjacencies(pairsAllowed, rows, cols, seat);
 
         Solver solver = model.getSolver();
