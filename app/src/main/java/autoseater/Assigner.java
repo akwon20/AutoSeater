@@ -18,110 +18,165 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
-    private void createRestrictions(List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
-        for (Integer[] pair_forbidden : pairsForbidden) {
-            int val_forbidden1 = pair_forbidden[0];
-            int val_forbidden2 = pair_forbidden[1];
+    private void createConstraints(Model model, List<Integer[]> constraintPairs, String op, int rows, int cols, IntVar[][] seats) {
+        for (Integer[] pair : constraintPairs) {
+            int a = pair[0];
+            int b = pair[1];
 
-            System.out.println("Adding restrictions for pair {" + val_forbidden1 + ", " + val_forbidden2 + "}...");
-
-            for (int r = 0; r < rows; r++) {
-                for (int k = 0; k < cols; k++) {
-                    // System.out.println("Current index: " + r + ", " + k);
-
-                    if (r > 0) { // Up
-                        // System.out.println("Up");
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r - 1][k], "!=", val_forbidden2)).post();
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[r - 1][k], "!=", val_forbidden1)).post();
-                    }
-                    if (r < rows - 1) { // Down
-                        // System.out.println("Down");
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r + 1][k], "!=", val_forbidden2)).post();
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[r + 1][k], "!=", val_forbidden1)).post();
-                    }
-                    if (k > 0) { // Left
-                        // System.out.println("Left");
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r][k - 1], "!=", val_forbidden2)).post();
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[1][k - 1], "!=", val_forbidden1)).post();
-                    }
-                    if (k < cols - 1) { // Right
-                        // System.out.println("Right");
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r][k + 1], "!=", val_forbidden2)).post();
-                        model.or(
-                                model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[1][k + 1], "!=", val_forbidden1)).post();
-                    }
-                }
-            }
-        }
-    }
-
-    private void createAdjacencies(List<Integer[]> pairsAllowed, int rows, int cols, IntVar[][] seat) {
-        for (Integer[] pair_allowed : pairsAllowed) {
-            int val_allowed1 = pair_allowed[0];
-            int val_allowed2 = pair_allowed[1];
-
-            System.out.println("Adding adjacency for pair {" + val_allowed1 + ", " + val_allowed2 + "}...");
+            System.out.println("Adding constraint for pair {" + a + ", " + b + "}...");
 
             for (int r = 0; r < rows; r++) {
                 for (int k = 0; k < cols; k++) {
                     // System.out.println("Current index: " + r + ", " + k);
-                    BoolVar isA = model.arithm(seat[r][k], "=", val_allowed1).reify();
-                    BoolVar isB = model.arithm(seat[r][k], "=", val_allowed2).reify();
+                    BoolVar isA = model.arithm(seats[r][k], op, a).reify();
+                    BoolVar isB = model.arithm(seats[r][k], op, b).reify();
 
                     List<BoolVar> neighborsAreA = new ArrayList<BoolVar>();
                     List<BoolVar> neighborsAreB = new ArrayList<BoolVar>();
 
-                    if (r > 0) { // Up
+                    if (r > 0) {    // Up
                         // System.out.println("Up");
-                        neighborsAreB.add(model.arithm(seat[r - 1][k], "=", val_allowed2).reify());
-                        neighborsAreA.add(model.arithm(seat[r - 1][k], "=", val_allowed1).reify());
+                        neighborsAreB.add(model.arithm(seats[r-1][k], op, b).reify());
+                        neighborsAreA.add(model.arithm(seats[r-1][k], op, a).reify());
                     }
-                    if (r < rows - 1) { // Down
+                    if (r < rows-1) {   // Down
                         // System.out.println("Down");
-                        neighborsAreB.add(model.arithm(seat[r + 1][k], "=", val_allowed2).reify());
-                        neighborsAreA.add(model.arithm(seat[r + 1][k], "=", val_allowed1).reify());
+                        neighborsAreB.add(model.arithm(seats[r+1][k], op, b).reify());
+                        neighborsAreA.add(model.arithm(seats[r+1][k], op, a).reify());
                     }
-                    if (k > 0) { // Left
+                    if (k > 0) {   // Left
                         // System.out.println("Left");
-                        neighborsAreB.add(model.arithm(seat[r][k - 1], "=", val_allowed2).reify());
-                        neighborsAreA.add(model.arithm(seat[r][k - 1], "=", val_allowed1).reify());
+                        neighborsAreB.add(model.arithm(seats[r][k-1], op, b).reify());
+                        neighborsAreA.add(model.arithm(seats[r][k-1], op, a).reify());
                     }
-                    if (k < cols - 1) { // Right
+                    if (k < cols-1) {   // Right
                         // System.out.println("Right");
-                        neighborsAreB.add(model.arithm(seat[r][k + 1], "=", val_allowed2).reify());
-                        neighborsAreA.add(model.arithm(seat[r][k + 1], "=", val_allowed1).reify());
+                        neighborsAreB.add(model.arithm(seats[r][k+1], op, b).reify());
+                        neighborsAreA.add(model.arithm(seats[r][k+1], op, a).reify());
                     }
 
                     if (!neighborsAreB.isEmpty()) {
                         model.ifThen(
-                                isA,
-                                model.or(neighborsAreB.toArray(new BoolVar[0])));
+                            isA,
+                            model.or(neighborsAreB.toArray(new BoolVar[0]))
+                        );
                     }
 
                     if (!neighborsAreA.isEmpty()) {
                         model.ifThen(
-                                isB,
-                                model.or(neighborsAreA.toArray(new BoolVar[0])));
+                            isB,
+                            model.or(neighborsAreA.toArray(new BoolVar[0]))
+                        );
                     }
                 }
             }
         }
     }
+
+    // private void createRestrictions(List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
+    //     for (Integer[] pair_forbidden : pairsForbidden) {
+    //         int val_forbidden1 = pair_forbidden[0];
+    //         int val_forbidden2 = pair_forbidden[1];
+
+    //         System.out.println("Adding restrictions for pair {" + val_forbidden1 + ", " + val_forbidden2 + "}...");
+
+    //         for (int r = 0; r < rows; r++) {
+    //             for (int k = 0; k < cols; k++) {
+    //                 // System.out.println("Current index: " + r + ", " + k);
+
+    //                 if (r > 0) { // Up
+    //                     // System.out.println("Up");
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden1),
+    //                             model.arithm(seat[r - 1][k], "!=", val_forbidden2)).post();
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden2),
+    //                             model.arithm(seat[r - 1][k], "!=", val_forbidden1)).post();
+    //                 }
+    //                 if (r < rows - 1) { // Down
+    //                     // System.out.println("Down");
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden1),
+    //                             model.arithm(seat[r + 1][k], "!=", val_forbidden2)).post();
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden2),
+    //                             model.arithm(seat[r + 1][k], "!=", val_forbidden1)).post();
+    //                 }
+    //                 if (k > 0) { // Left
+    //                     // System.out.println("Left");
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden1),
+    //                             model.arithm(seat[r][k - 1], "!=", val_forbidden2)).post();
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden2),
+    //                             model.arithm(seat[1][k - 1], "!=", val_forbidden1)).post();
+    //                 }
+    //                 if (k < cols - 1) { // Right
+    //                     // System.out.println("Right");
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden1),
+    //                             model.arithm(seat[r][k + 1], "!=", val_forbidden2)).post();
+    //                     model.or(
+    //                             model.arithm(seat[r][k], "!=", val_forbidden2),
+    //                             model.arithm(seat[1][k + 1], "!=", val_forbidden1)).post();
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    // private void createAdjacencies(List<Integer[]> pairsAllowed, int rows, int cols, IntVar[][] seat) {
+    //     for (Integer[] pair_allowed : pairsAllowed) {
+    //         int val_allowed1 = pair_allowed[0];
+    //         int val_allowed2 = pair_allowed[1];
+
+    //         System.out.println("Adding adjacency for pair {" + val_allowed1 + ", " + val_allowed2 + "}...");
+
+    //         for (int r = 0; r < rows; r++) {
+    //             for (int k = 0; k < cols; k++) {
+    //                 // System.out.println("Current index: " + r + ", " + k);
+    //                 BoolVar isA = model.arithm(seat[r][k], "=", val_allowed1).reify();
+    //                 BoolVar isB = model.arithm(seat[r][k], "=", val_allowed2).reify();
+
+    //                 List<BoolVar> neighborsAreA = new ArrayList<BoolVar>();
+    //                 List<BoolVar> neighborsAreB = new ArrayList<BoolVar>();
+
+    //                 if (r > 0) { // Up
+    //                     // System.out.println("Up");
+    //                     neighborsAreB.add(model.arithm(seat[r - 1][k], "=", val_allowed2).reify());
+    //                     neighborsAreA.add(model.arithm(seat[r - 1][k], "=", val_allowed1).reify());
+    //                 }
+    //                 if (r < rows - 1) { // Down
+    //                     // System.out.println("Down");
+    //                     neighborsAreB.add(model.arithm(seat[r + 1][k], "=", val_allowed2).reify());
+    //                     neighborsAreA.add(model.arithm(seat[r + 1][k], "=", val_allowed1).reify());
+    //                 }
+    //                 if (k > 0) { // Left
+    //                     // System.out.println("Left");
+    //                     neighborsAreB.add(model.arithm(seat[r][k - 1], "=", val_allowed2).reify());
+    //                     neighborsAreA.add(model.arithm(seat[r][k - 1], "=", val_allowed1).reify());
+    //                 }
+    //                 if (k < cols - 1) { // Right
+    //                     // System.out.println("Right");
+    //                     neighborsAreB.add(model.arithm(seat[r][k + 1], "=", val_allowed2).reify());
+    //                     neighborsAreA.add(model.arithm(seat[r][k + 1], "=", val_allowed1).reify());
+    //                 }
+
+    //                 if (!neighborsAreB.isEmpty()) {
+    //                     model.ifThen(
+    //                             isA,
+    //                             model.or(neighborsAreB.toArray(new BoolVar[0])));
+    //                 }
+
+    //                 if (!neighborsAreA.isEmpty()) {
+    //                     model.ifThen(
+    //                             isB,
+    //                             model.or(neighborsAreA.toArray(new BoolVar[0])));
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     public IntVar[][] assignSeats(int rows, int cols, List<Integer[]> pairsForbidden, List<Integer[]> pairsAllowed) {
         IntVar[][] seat = new IntVar[rows][cols];
@@ -149,8 +204,8 @@ public class Assigner {
             System.out.println();
         }
 
-        createRestrictions(pairsForbidden, rows, cols, seat);
-        createAdjacencies(pairsAllowed, rows, cols, seat);
+        createConstraints(model, pairsForbidden, "!=", rows, cols, seat);
+        createConstraints(model, pairsAllowed, "=", rows, cols, seat);
 
         Solver solver = model.getSolver();
         // Solution solution;
