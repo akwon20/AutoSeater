@@ -79,11 +79,7 @@ public class App {
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
 
-        int countStudent = 0;
-        int countRows = 0;
-        int countCols = 0;
-        int countConst = 0;
-        int countAdj = 0;
+        int countStudent, countRows, countCols, countConst, countAdj;
         IntVar[][] seats;
         List<Student> students = new ArrayList<Student>();
         List<String[]> pairsForbidden = new ArrayList<String[]>();
@@ -96,7 +92,7 @@ public class App {
         countStudent = setCount();
 
         if (countStudent < 1) {
-            System.out.println("ERR: There must be at least 1 row or column!");
+            System.out.println("ERR: There must be at least 1 student!");
             return;
         }
 
