@@ -204,8 +204,8 @@ public class Assigner {
             System.out.println();
         }
 
-        createConstraints(model, pairsForbidden, "!=", rows, cols, seat);
-        createConstraints(model, pairsAllowed, "=", rows, cols, seat);
+        createConstraints(model, pairsForbidden, "!=", rows, cols, seat);   // Create constraints for restricted pairs
+        createConstraints(model, pairsAllowed, "=", rows, cols, seat);      // Create constraints for allowed pairs
 
         Solver solver = model.getSolver();
         // Solution solution;
