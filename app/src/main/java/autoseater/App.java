@@ -79,7 +79,11 @@ public class App {
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
 
-        int countStudent, countRows, countCols, countConst, countAdj;
+        int countStudent = 0;
+        int countRows = 0;
+        int countCols = 0;
+        int countConst = 0;
+        int countAdj = 0;
         IntVar[][] seats;
         List<Student> students = new ArrayList<Student>();
         List<String[]> pairsForbidden = new ArrayList<String[]>();
@@ -90,6 +94,11 @@ public class App {
 
         System.out.println("Enter the number of students: ");
         countStudent = setCount();
+
+        if (countStudent < 1) {
+            System.out.println("ERR: There must be at least 1 row or column!");
+            return;
+        }
 
         for (int i = 0; i < countStudent; i++) {
             System.out.println("Enter name for Student " + i + ": ");
@@ -105,6 +114,11 @@ public class App {
 
         System.out.println("Number of rows: " + countRows);
         System.out.println("Number of columns: " + countCols);
+
+        if ((countRows < 1) || (countCols < 1)) {
+            System.out.println("ERR: There must be at least 1 row or column!");
+            return;
+        }
 
         System.out.println("Enter the number of constraints: ");
         countConst = setCount();
