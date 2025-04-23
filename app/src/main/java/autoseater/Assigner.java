@@ -18,20 +18,18 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
-    private int findStudentId(List<Student> studentList, String name) {
-        String studentName;
-
+    private Integer findStudentIdByName(List<Student> studentList, String name) {
         int left = 0;
         int right = studentList.size() - 1;
 
         while (left <= right) {
             int mid = (left + (right - left)) / 2;
 
-            if (studentList.get(mid).getName().equals(name)) {
-                return studentList.get(mid).getIdNum();
+            if ((studentList.get(mid)).getName().equals(name)) {
+                return (studentList.get(mid)).getIdNum();
             }
 
-            if (studentList.get(mid).getName().compareTo(name) < 0) {
+            if ((studentList.get(mid).getName()).compareToIgnoreCase(name) < 0) {
                 left = mid + 1;
             }
             else {
@@ -39,9 +37,30 @@ public class Assigner {
             }
         }
 
-        return -1;
+        return null;
     }
 
+    private String findStudentNameById(List<Student> studentList, int id) {
+        int left = 0;
+        int right = studentList.size() - 1;
+
+        while (left <= right) {
+            int mid = (left + (right - left)) / 2;
+
+            if ((studentList.get(mid)).getIdNum() == id) {
+                return (studentList.get(mid)).getName();
+            }
+
+            if (studentList.get(mid).getIdNum() < id) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return "";
+    }
     private void createConstraints(Model model, List<Integer[]> constraintPairs, String op, int rows, int cols, IntVar[][] seats) {
         for (Integer[] pair : constraintPairs) {
             int a = pair[0];
