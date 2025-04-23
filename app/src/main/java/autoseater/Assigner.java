@@ -18,7 +18,7 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
-    private int findStudentName(List<Student> studentList, String name) {
+    private int findStudentId(List<Student> studentList, String name) {
         String studentName;
 
         int left = 0;
@@ -28,7 +28,7 @@ public class Assigner {
             int mid = (left + (right - left)) / 2;
 
             if (studentList.get(mid).getName().equals(name)) {
-                return mid;
+                return studentList.get(mid).getIdNum();
             }
 
             if (studentList.get(mid).getName().compareTo(name) < 0) {
