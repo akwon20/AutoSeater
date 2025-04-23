@@ -18,6 +18,30 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
+    private int findStudentName(List<Student> studentList, String name) {
+        String studentName;
+
+        int left = 0;
+        int right = studentList.size() - 1;
+
+        while (left <= right) {
+            int mid = (left + (right - left)) / 2;
+
+            if (studentList.get(mid).getName().equals(name)) {
+                return mid;
+            }
+
+            if (studentList.get(mid).getName().compareTo(name) < 0) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+
     private void createConstraints(Model model, List<Integer[]> constraintPairs, String op, int rows, int cols, IntVar[][] seats) {
         for (Integer[] pair : constraintPairs) {
             int a = pair[0];
