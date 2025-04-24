@@ -57,7 +57,7 @@ public class App {
         return name;
     }
 
-    private Integer getStudentIdByName(List<Student> studentList, String name) {
+    public static Integer getStudentIdByName(List<Student> studentList, String name) {
         int left = 0;
         int right = studentList.size() - 1;
 
@@ -79,7 +79,7 @@ public class App {
         return null;
     }
 
-    private String getStudentNameById(List<Student> studentList, int id) {
+    public static String getStudentNameById(List<Student> studentList, int id) {
         int left = 0;
         int right = studentList.size() - 1;
 
@@ -128,6 +128,9 @@ public class App {
         List<Student> students = new ArrayList<Student>();
         List<String[]> pairsForbidden = new ArrayList<String[]>();
         List<String[]> pairsAllowed = new ArrayList<String[]>();
+
+        List<Integer[]> pairsForbidden_id = new ArrayList<Integer[]>();
+        List<Integer[]> pairsAllowed_id = new ArrayList<Integer[]>();
 
         scanner = new Scanner(System.in);
         Assigner assigner = new Assigner();
