@@ -170,8 +170,7 @@ public class App {
             System.out.println("Adjacency: {" + allowed_val1 + ", " + allowed_val2 + "}");
         }
 
-        System.out.println("Enter the name to search: ");
-
+        // System.out.println("Enter the name to search: ");
         // String nameToSearch = scanner.nextLine();
 
         scanner.close();
