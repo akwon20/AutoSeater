@@ -6,9 +6,26 @@ package autoseater;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppTest {
-    @Test public void appHasAGreeting() {
+    @Test
+    public void appHasAGreeting() {
         App classUnderTest = new App();
         assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+    }
+
+    @Test
+    public void checkStudentList() {
+        // App app = new App();
+
+        List<Student> testStudentList = new ArrayList<Student>();
+
+        for (int i = 0; i < 3; i++) {
+            testStudentList.add(new Student(i, "Student " + i));
+        }
+
+        assertEquals(testStudentList.size(), 3);
     }
 }
