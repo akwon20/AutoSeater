@@ -77,10 +77,29 @@ public class App {
         return "";
     }
 
-    public static List<String[]> setSeatingPairs(List<Student> studentList, int size) {
-        List<String[]> rules = new ArrayList<String[]>();
+    // public static List<String[]> setSeatingPairs(List<Student> studentList, int size) {
+    //     List<String[]> rules = new ArrayList<String[]>();
 
-        for (int i = 0; i < size; i++) {
+    //     for (int i = 0; i < size; i++) {
+    //         System.out.println("Constraint " + i);
+    //         System.out.println("Enter Name 1: ");
+    //         String name1 = inputName(studentList);
+
+    //         System.out.println("Enter Name 2: ");
+    //         String name2 = inputName(studentList);
+
+    //         String[] pair = {name1, name2};
+
+    //         rules.add(pair);
+    //     }
+
+    //     return rules;
+    // }
+
+    public static List<Integer[]> setSeatingPairs(List<Student> studentList, int count) {
+        List<Integer[]> rules = new ArrayList<Integer[]>();
+
+        for (int i = 0; i < count; i++) {
             System.out.println("Constraint " + i);
             System.out.println("Enter Name 1: ");
             String name1 = inputName(studentList);
@@ -88,7 +107,10 @@ public class App {
             System.out.println("Enter Name 2: ");
             String name2 = inputName(studentList);
 
-            String[] pair = {name1, name2};
+            int id1 = getStudentIdByName(studentList, name1);
+            int id2 = getStudentIdByName(studentList, name2);
+
+            Integer[] pair = {id1, id2};
 
             rules.add(pair);
         }
@@ -102,8 +124,8 @@ public class App {
         int countStudent, countRows, countCols, countConst, countAdj;
         IntVar[][] seats;
         List<Student> students = new ArrayList<Student>();
-        List<String[]> pairsForbidden = new ArrayList<String[]>();
-        List<String[]> pairsAllowed = new ArrayList<String[]>();
+        // List<String[]> pairsForbidden = new ArrayList<String[]>();
+        // List<String[]> pairsAllowed = new ArrayList<String[]>();
 
         List<Integer[]> pairsForbidden_id = new ArrayList<Integer[]>();
         List<Integer[]> pairsAllowed_id = new ArrayList<Integer[]>();
@@ -152,20 +174,34 @@ public class App {
             System.out.println(students.get(j).getName());
         }
 
-        pairsForbidden = setSeatingPairs(students, countConst);
+        // pairsForbidden = setSeatingPairs(students, countConst);
+        pairsForbidden_id = setSeatingPairs(students, countConst);
 
-        for (String[] forbidden_pair : pairsForbidden) {
-            String forbidden_val1 = forbidden_pair[0];
-            String forbidden_val2 = forbidden_pair[1];
+        // for (String[] forbidden_pair : pairsForbidden) {
+        //     String forbidden_val1 = forbidden_pair[0];
+        //     String forbidden_val2 = forbidden_pair[1];
+
+        //     System.out.println("Constraint: {" + forbidden_val1 + ", " + forbidden_val2 + "}");
+        // }
+        for (Integer[] forbidden_pair : pairsForbidden_id) {
+            int forbidden_val1 = forbidden_pair[0];
+            int forbidden_val2 = forbidden_pair[1];
 
             System.out.println("Constraint: {" + forbidden_val1 + ", " + forbidden_val2 + "}");
         }
 
-        pairsAllowed = setSeatingPairs(students, countAdj);
+        // pairsAllowed = setSeatingPairs(students, countAdj);
+        pairsAllowed_id = setSeatingPairs(students, countAdj);
 
-        for (String[] allowed_pair : pairsAllowed) {
-            String allowed_val1 = allowed_pair[0];
-            String allowed_val2 = allowed_pair[1];
+        // for (String[] allowed_pair : pairsAllowed) {
+        //     String allowed_val1 = allowed_pair[0];
+        //     String allowed_val2 = allowed_pair[1];
+
+        //     System.out.println("Adjacency: {" + allowed_val1 + ", " + allowed_val2 + "}");
+        // }
+        for (Integer[] allowed_pair : pairsAllowed_id) {
+            int allowed_val1 = allowed_pair[0];
+            int allowed_val2 = allowed_pair[1];
 
             System.out.println("Adjacency: {" + allowed_val1 + ", " + allowed_val2 + "}");
         }
@@ -174,7 +210,14 @@ public class App {
         // String nameToSearch = scanner.nextLine();
 
         scanner.close();
-        // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
+        seats = assigner.assignSeats(countRows, countCols, pairsForbidden_id, pairsAllowed_id);
+
+        for (int i = 0; i < countRows; i++) {
+            for (int j = 0; j < countCols; j++) {
+                System.out.print(getStudentNameById(students, seats[i][j].getValue()) + "\t");
+            }
+            System.out.println();
+        }
 
         // int id = getStudentIdByName(students, nameToSearch);
 
