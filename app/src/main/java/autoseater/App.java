@@ -57,6 +57,50 @@ public class App {
         return name;
     }
 
+    private Integer getStudentIdByName(List<Student> studentList, String name) {
+        int left = 0;
+        int right = studentList.size() - 1;
+
+        while (left <= right) {
+            int mid = (left + (right - left)) / 2;
+
+            if ((studentList.get(mid)).getName().equals(name)) {
+                return (studentList.get(mid)).getIdNum();
+            }
+
+            if ((studentList.get(mid).getName()).compareToIgnoreCase(name) < 0) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return null;
+    }
+
+    private String getStudentNameById(List<Student> studentList, int id) {
+        int left = 0;
+        int right = studentList.size() - 1;
+
+        while (left <= right) {
+            int mid = (left + (right - left)) / 2;
+
+            if ((studentList.get(mid)).getIdNum() == id) {
+                return (studentList.get(mid)).getName();
+            }
+
+            if (studentList.get(mid).getIdNum() < id) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return "";
+    }
+
     public static List<String[]> setSeatingPairs(List<Student> studentList, int size) {
         List<String[]> rules = new ArrayList<String[]>();
 
