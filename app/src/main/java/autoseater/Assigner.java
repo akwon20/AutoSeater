@@ -18,7 +18,7 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
-    private Integer findStudentIdByName(List<Student> studentList, String name) {
+    private Integer getStudentIdByName(List<Student> studentList, String name) {
         int left = 0;
         int right = studentList.size() - 1;
 
@@ -40,7 +40,7 @@ public class Assigner {
         return null;
     }
 
-    private String findStudentNameById(List<Student> studentList, int id) {
+    private String getStudentNameById(List<Student> studentList, int id) {
         int left = 0;
         int right = studentList.size() - 1;
 
