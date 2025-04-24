@@ -58,21 +58,9 @@ public class App {
     }
 
     public static Integer getStudentIdByName(List<Student> studentList, String name) {
-        int left = 0;
-        int right = studentList.size() - 1;
-
-        while (left <= right) {
-            int mid = (left + (right - left)) / 2;
-
-            if ((studentList.get(mid)).getName().equals(name)) {
-                return (studentList.get(mid)).getIdNum();
-            }
-
-            if ((studentList.get(mid).getName()).compareToIgnoreCase(name) < 0) {
-                left = mid + 1;
-            }
-            else {
-                right = mid - 1;
+        for (Student student : studentList) {
+            if (student.getName().equals(name)) {
+                return student.getIdNum();
             }
         }
 
@@ -80,21 +68,9 @@ public class App {
     }
 
     public static String getStudentNameById(List<Student> studentList, int id) {
-        int left = 0;
-        int right = studentList.size() - 1;
-
-        while (left <= right) {
-            int mid = (left + (right - left)) / 2;
-
-            if ((studentList.get(mid)).getIdNum() == id) {
-                return (studentList.get(mid)).getName();
-            }
-
-            if (studentList.get(mid).getIdNum() < id) {
-                left = mid + 1;
-            }
-            else {
-                right = mid - 1;
+        for (Student student : studentList) {
+            if (student.getIdNum() == id) {
+                return student.getName();
             }
         }
 
@@ -194,7 +170,20 @@ public class App {
             System.out.println("Adjacency: {" + allowed_val1 + ", " + allowed_val2 + "}");
         }
 
+        System.out.println("Enter the name to search: ");
+
+        // String nameToSearch = scanner.nextLine();
+
         scanner.close();
         // seats = assigner.assignSeats(countRows, countCols, pairsForbidden, pairsAllowed);
+
+        // int id = getStudentIdByName(students, nameToSearch);
+
+        // if (id > -1) {
+        //     System.out.println("Student ID for " + nameToSearch + ": " + id);
+        // }
+        // else {
+        //     System.out.println("Student not found!");
+        }
     }
 }
