@@ -187,7 +187,7 @@ public class App {
             int forbidden_val1 = forbidden_pair[0];
             int forbidden_val2 = forbidden_pair[1];
 
-            System.out.println("Constraint: {" + forbidden_val1 + ", " + forbidden_val2 + "}");
+            System.out.println("Constraint: {" + getStudentNameById(students, forbidden_val1) + ", " + getStudentNameById(students, forbidden_val2) + "}");
         }
 
         // pairsAllowed = setSeatingPairs(students, countAdj);
@@ -203,7 +203,7 @@ public class App {
             int allowed_val1 = allowed_pair[0];
             int allowed_val2 = allowed_pair[1];
 
-            System.out.println("Adjacency: {" + allowed_val1 + ", " + allowed_val2 + "}");
+            System.out.println("Adjacency: {" + getStudentNameById(students, allowed_val1) + ", " + getStudentNameById(students, allowed_val2) + "}");
         }
 
         // System.out.println("Enter the name to search: ");
