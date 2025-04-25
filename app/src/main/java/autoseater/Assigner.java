@@ -153,7 +153,7 @@ public class Assigner {
         }
 
         // createConstraints(model, pairsForbidden, "!=", rows, cols, seat);   // Create constraints for restricted pairs
-        createRestrictions(cols, pairsForbidden, rows, cols, seat);            // Create constraints for restricted pairs
+        createRestrictions(model, pairsForbidden, rows, cols, seat);            // Create constraints for restricted pairs
         createConstraints(model, pairsAllowed, "=", rows, cols, seat);      // Create constraints for allowed pairs
 
         Solver solver = model.getSolver();
