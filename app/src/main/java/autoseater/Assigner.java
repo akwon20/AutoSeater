@@ -30,41 +30,41 @@ public class Assigner {
                         // System.out.println("Up");
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r - 1][k], "!=", val_forbidden2)).post();
+                                model.arithm(seat[r-1][k], "!=", val_forbidden2)).post();
 
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[r - 1][k], "!=", val_forbidden1)).post();
+                                model.arithm(seat[r-1][k], "!=", val_forbidden1)).post();
                     }
 
                     if (r < rows - 1) { // Down
                         // System.out.println("Down");
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r + 1][k], "!=", val_forbidden2)).post();
+                                model.arithm(seat[r+1][k], "!=", val_forbidden2)).post();
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[r + 1][k], "!=", val_forbidden1)).post();
+                                model.arithm(seat[r+1][k], "!=", val_forbidden1)).post();
                     }
 
                     if (k > 0) { // Left
                         // System.out.println("Left");
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r][k - 1], "!=", val_forbidden2)).post();
+                                model.arithm(seat[r][k-1], "!=", val_forbidden2)).post();
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[1][k - 1], "!=", val_forbidden1)).post();
+                                model.arithm(seat[1][k-1], "!=", val_forbidden1)).post();
                     }
 
                     if (k < cols - 1) { // Right
                         // System.out.println("Right");
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden1),
-                                model.arithm(seat[r][k + 1], "!=", val_forbidden2)).post();
+                                model.arithm(seat[r][k+1], "!=", val_forbidden2)).post();
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[1][k + 1], "!=", val_forbidden1)).post();
+                                model.arithm(seat[1][k+1], "!=", val_forbidden1)).post();
                     }
                 }
             }
