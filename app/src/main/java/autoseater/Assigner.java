@@ -18,6 +18,59 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
+    private void createRestrictions(Model model, List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
+        for (Integer[] pair_forbidden : pairsForbidden) {
+            int val_forbidden1 = pair_forbidden[0];
+            int val_forbidden2 = pair_forbidden[1];
+
+            for (int r = 0; r < rows; r++) {
+                for (int k = 0; k < cols; k++) {
+                    // System.out.println("Current index: " + r + ", " + k);
+                    if (r > 0) { // Up
+                        // System.out.println("Up");
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden1),
+                                model.arithm(seat[r - 1][k], "!=", val_forbidden2)).post();
+
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden2),
+                                model.arithm(seat[r - 1][k], "!=", val_forbidden1)).post();
+                    }
+
+                    if (r < rows - 1) { // Down
+                        // System.out.println("Down");
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden1),
+                                model.arithm(seat[r + 1][k], "!=", val_forbidden2)).post();
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden2),
+                                model.arithm(seat[r + 1][k], "!=", val_forbidden1)).post();
+                    }
+
+                    if (k > 0) { // Left
+                        // System.out.println("Left");
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden1),
+                                model.arithm(seat[r][k - 1], "!=", val_forbidden2)).post();
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden2),
+                                model.arithm(seat[1][k - 1], "!=", val_forbidden1)).post();
+                    }
+
+                    if (k < cols - 1) { // Right
+                        // System.out.println("Right");
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden1),
+                                model.arithm(seat[r][k + 1], "!=", val_forbidden2)).post();
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden2),
+                                model.arithm(seat[1][k + 1], "!=", val_forbidden1)).post();
+                    }
+                }
+            }
+        }
+    }
+
     private void createConstraints(Model model, List<Integer[]> constraintPairs, String op, int rows, int cols, IntVar[][] seats) {
         for (Integer[] pair : constraintPairs) {
             int a = pair[0];
@@ -99,7 +152,8 @@ public class Assigner {
             System.out.println();
         }
 
-        createConstraints(model, pairsForbidden, "!=", rows, cols, seat);   // Create constraints for restricted pairs
+        // createConstraints(model, pairsForbidden, "!=", rows, cols, seat);   // Create constraints for restricted pairs
+        createRestrictions(cols, pairsForbidden, rows, cols, seat);            // Create constraints for restricted pairs
         createConstraints(model, pairsAllowed, "=", rows, cols, seat);      // Create constraints for allowed pairs
 
         Solver solver = model.getSolver();
