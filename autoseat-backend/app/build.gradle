@@ -37,6 +37,6 @@ jar {
     }
 }
 shadowJar {
-    archiveBaseName.set('chocosolverpractice')
+    archiveBaseName.set('autoseater')
     archiveClassifier.set('')
 }
