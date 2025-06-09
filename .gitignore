@@ -3,11 +3,12 @@
 
 # Ignore Gradle build output directory
 build
+.bin
+.cache
 
 
 # dependencies
-/node_modules
-/.pnp
+/autoseat-frontend/node_modules
 .pnp.js
 
 # testing
