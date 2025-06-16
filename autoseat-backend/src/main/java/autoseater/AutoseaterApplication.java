@@ -14,11 +14,11 @@ public class AutoseaterApplication {
 
 	static Scanner scanner;
 
-    int countRows, countCols;
-    IntVar[][] seats;
-    List<Student> students;
-    List<Integer[]> pairsForbidden_id;
-    List<Integer[]> pairsAllowed_id;
+    private int countRows, countCols;
+    private IntVar[][] seats;
+    private List<Student> students;
+    private List<Integer[]> pairsForbidden_id;
+    private List<Integer[]> pairsAllowed_id;
 
     public AutoseaterApplication() {
         countRows = 0;
@@ -48,6 +48,14 @@ public class AutoseaterApplication {
         return count;
     }
 
+    public void setCountRows(int count) {
+        countRows = count;
+    }
+
+    public void setCountCols(int count) {
+        countCols = count;
+    }
+
     public static String inputName(List<Student> studentList) {
         String name = "";
         Boolean nameFound = false;
@@ -71,6 +79,14 @@ public class AutoseaterApplication {
         }
 
         return name;
+    }
+
+    public int getCountRows() {
+        return countRows;
+    }
+
+    public int getCountCols() {
+        return countCols;
     }
 
     public static Integer getStudentIdByName(List<Student> studentList, String name) {
