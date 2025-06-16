@@ -1,13 +1,12 @@
 package autoseater;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.chocosolver.solver.variables.IntVar;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AutoseaterApplication {
@@ -54,6 +53,16 @@ public class AutoseaterApplication {
 
     public void setCountCols(int count) {
         countCols = count;
+    }
+
+    public void updateStudentList(String[] names) {
+        if (!students.isEmpty()) {
+            students.clear();
+        }
+
+        for (int i = 0; i < names.length; i++) {
+            students.add(new Student(i, names[i]));
+        }
     }
 
     public static String inputName(List<Student> studentList) {
