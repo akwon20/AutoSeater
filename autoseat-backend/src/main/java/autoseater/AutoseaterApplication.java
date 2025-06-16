@@ -14,8 +14,19 @@ public class AutoseaterApplication {
 
 	static Scanner scanner;
 
-    public AutoseaterApplication() {
+    int countRows, countCols;
+    IntVar[][] seats;
+    List<Student> students;
+    List<Integer[]> pairsForbidden_id;
+    List<Integer[]> pairsAllowed_id;
 
+    public AutoseaterApplication() {
+        countRows = 0;
+        countCols = 0;
+        seats = null;
+        students = new ArrayList<Student>();
+        pairsForbidden_id = new ArrayList<Integer[]>();
+        pairsAllowed_id = new ArrayList<Integer[]>();
     }
 
     public String getGreeting() {
