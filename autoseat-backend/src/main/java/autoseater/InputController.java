@@ -14,9 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 public class InputController {
 
+    private final AutoseaterApplication mainApp;
+
+    public InputController(AutoseaterApplication mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    @GetMapping("/helloworld")
+    public ResponseEntity<Map<String, String>> getHelloWorld() {
+        Map<String, String> response = new HashMap();
+        String output = mainApp.getGreeting();
+
+        response.put("message", output);
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/studentnames")
-    public ResponseEntity<Map<String, String[]>> getStudentNames() {
-        Map<String, String[]> response = new HashMap();
+    public ResponseEntity<Map<String, String>> getStudentNames() {
+        Map<String, String> response = new HashMap();
+
+        response.put("message", "Hello, World!");
 
         return ResponseEntity.ok(response);
     }

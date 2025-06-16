@@ -14,6 +14,10 @@ public class AutoseaterApplication {
 
 	static Scanner scanner;
 
+    public AutoseaterApplication() {
+
+    }
+
     public String getGreeting() {
         return "Hello World!";
     }
