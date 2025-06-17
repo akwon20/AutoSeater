@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import axios from 'axios';
 
 import CustomErrorModal from './components/CustomErrorModal.js';
 import SeatingChartCanvas from './components/SeatingChartCanvas.js';
