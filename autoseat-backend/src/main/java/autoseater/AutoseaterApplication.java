@@ -16,6 +16,7 @@ public class AutoseaterApplication {
     private int countRows, countCols;
     private IntVar[][] seats;
     private List<Student> students;
+    private List<String> rules;
     private List<Integer[]> pairsForbidden_id;
     private List<Integer[]> pairsAllowed_id;
 
@@ -24,6 +25,7 @@ public class AutoseaterApplication {
         countCols = 0;
         seats = null;
         students = new ArrayList<Student>();
+        rules = new ArrayList<String>();
         pairsForbidden_id = new ArrayList<Integer[]>();
         pairsAllowed_id = new ArrayList<Integer[]>();
     }
@@ -63,6 +65,14 @@ public class AutoseaterApplication {
         for (int i = 0; i < names.length; i++) {
             students.add(new Student(i, names[i]));
         }
+    }
+
+    public void addRule(String ruleString) {
+        rules.add(ruleString);
+    }
+
+    public void removeRule(int removalIndex) {
+        rules.remove(removalIndex);
     }
 
     public static String inputName(List<Student> studentList) {
