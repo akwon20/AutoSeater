@@ -41,37 +41,37 @@ const App = () => {
 
   const handleChangeRowInput = (e) => {
     setRowInput(e.target.value);
-  }
+  };
 
   const handleChangeColInput = (e) => {
     setColInput(e.target.value);
-  }
+  };
 
   const handleStudentListChange = (e) => {
     setStudentList(e.target.value);
-  }
+  };
 
   const handleStudentDataChange = (e) => {
     setStudentData(e.target.value);
-  }
+  };
 
   const handleStudentSave = (e) => {
     e.preventDefault();
     console.log("Save Students clicked!");
     console.log("Current list: ", studentList);
 
-    // const newPost = {
-    //   studentList
-    // };
+    const newPost = {
+      studentList
+    };
 
-    // axios.post('http://localhost:8080/api/studentdata', studentList)
-    //       .then(response => {
-    //         console.log('Success: ', response.data);
-    //       })
-    //       .catch(error => {
-    //         console.error('ERROR: ', error);
-    //       });
-  }
+    axios.post('http://localhost:8080/api/studentdata', newPost)
+          .then(response => {
+            console.log('Success: ', response.data);
+          })
+          .catch(error => {
+            console.error('ERROR: ', error);
+          });
+  };
 
   const handleGenerate = () => {
     console.log("Generate button clicked!");
