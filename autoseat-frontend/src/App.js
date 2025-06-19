@@ -27,6 +27,8 @@ const App = () => {
   const [colInput, setColInput] = useState();
   const [rowCount, setRowCount] = useState();
   const [colCount, setColCount] = useState();
+  const [studentList, setStudentList] = useState("");
+  const [studentData, setStudentData] = useState([])
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -43,6 +45,33 @@ const App = () => {
 
   const handleChangeColInput = (e) => {
     setColInput(e.target.value);
+  }
+
+  const handleStudentListChange = (e) => {
+    setStudentList(e.target.value);
+    console.log("Current list: ", studentList);
+  }
+
+  const handleStudentDataChange = (e) => {
+    console.log("Save Students clicked!");
+    setStudentData(e.target.value);
+    console.log(studentData);
+  }
+
+  const handleStudentSave = (e) => {
+    e.preventDefault();
+
+    const newPost = {
+      studentList
+    };
+
+    axios.post('http://localhost:8080/api/studentdata', studentList)
+          .then(response => {
+            console.log('Success: ', response.data);
+          })
+          .catch(error => {
+            console.error('ERROR: ', error);
+          });
   }
 
   const handleGenerate = () => {
@@ -83,7 +112,7 @@ const App = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon data={data} />
+            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentDataChange} data={data} />
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">

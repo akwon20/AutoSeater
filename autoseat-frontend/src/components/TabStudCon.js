@@ -15,6 +15,9 @@ const TabStudCon = (props) => {
     // const addConstraintHandler = props.addConstraintHandler;
     // const removeConstraintHandler = props.removeConstraintHandler;
 
+    const studentListChangeHandler = props.studentListChangeHandler;
+    const studentDataSaveHandler = props.saveStudentDataHandler;
+
     const [constraintRows, setConstraintRows] = useState([]);
 
     const saveStudentList = () => {
@@ -61,8 +64,9 @@ const TabStudCon = (props) => {
                         className='TextArea'
                         rows={16}
                         style={{ display: "flex", maxHeight: "405px" }}
-                        placeholder='Enter student names (one per line)'/>
-                    <Button variant="primary" size="lg" onClick={saveStudentList}>Save Students</Button>
+                        placeholder='Enter student names (one per line)'
+                        onChange={studentListChangeHandler}/>
+                    <Button variant="primary" size="lg" onClick={studentDataSaveHandler}>Save Students</Button>
                     Don't forget to click save!
                 </div>
             </Tab>
