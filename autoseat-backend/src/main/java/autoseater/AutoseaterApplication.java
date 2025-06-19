@@ -108,6 +108,10 @@ public class AutoseaterApplication {
         return countCols;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public static Integer getStudentIdByName(List<Student> studentList, String name) {
         for (Student student : studentList) {
             if (student.getName().equals(name)) {

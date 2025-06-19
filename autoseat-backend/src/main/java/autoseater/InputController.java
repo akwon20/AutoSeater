@@ -1,6 +1,7 @@
 package autoseater;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -32,11 +33,11 @@ public class InputController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/studentnames")
-    public ResponseEntity<Map<String, String>> getStudentNames() {
-        Map<String, String> response = new HashMap();
+    @GetMapping("/studentnamesget")
+    public ResponseEntity<Map<String, List<Student>>> getStudentNames() {
+        Map<String, List<Student>> response = new HashMap();
 
-        response.put("message", "Hello, World!");
+        response.put("students", mainApp.getStudents());
 
         return ResponseEntity.ok(response);
     }
