@@ -1,11 +1,10 @@
 package autoseater;
 
-// import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -23,7 +22,12 @@ class AutoseaterApplicationTests {
             testStudentList.add(new Student(i, "Student " + i));
         }
 
-        Assert.assertEquals(3, testStudentList.size());
+        Assertions.assertEquals(3, testStudentList.size());
+    }
+
+    @Test
+    public void checkIntegration() {
+
     }
 
 }
