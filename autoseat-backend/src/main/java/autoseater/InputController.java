@@ -39,4 +39,11 @@ public class InputController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/studentdata")
+    public String[] updateStudentData() {
+        String studentData[];
+
+        return studentData;
+    }
+
 }

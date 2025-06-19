@@ -52,9 +52,7 @@ const App = () => {
   }
 
   const handleStudentDataChange = (e) => {
-    console.log("Save Students clicked!");
     setStudentData(e.target.value);
-    // console.log(studentData);
   }
 
   const handleStudentSave = (e) => {
