@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,11 +41,20 @@ public class InputController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/studentdata")
-    public String[] updateStudentData() {
-        String studentData[];
+    @PostMapping("/studentdatapost")
+    public void updateStudentData(@RequestBody String studentList) {
+        // System.out.println("Student List: " + studentList);
 
-        return studentData;
+        // Map<String, String> response = new HashMap();
+
+        // response.put("studentList", studentList);
+
+        // return ResponseEntity.ok(response);
+        System.out.println("Student List: " + studentList);
+
+        String names[] = studentList.split("\n");
+
+        mainApp.updateStudentList(names);
     }
 
 }
