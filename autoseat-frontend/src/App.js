@@ -49,29 +49,30 @@ const App = () => {
 
   const handleStudentListChange = (e) => {
     setStudentList(e.target.value);
-    console.log("Current list: ", studentList);
   }
 
   const handleStudentDataChange = (e) => {
     console.log("Save Students clicked!");
     setStudentData(e.target.value);
-    console.log(studentData);
+    // console.log(studentData);
   }
 
   const handleStudentSave = (e) => {
     e.preventDefault();
+    console.log("Save Students clicked!");
+    console.log("Current list: ", studentList);
 
-    const newPost = {
-      studentList
-    };
+    // const newPost = {
+    //   studentList
+    // };
 
-    axios.post('http://localhost:8080/api/studentdata', studentList)
-          .then(response => {
-            console.log('Success: ', response.data);
-          })
-          .catch(error => {
-            console.error('ERROR: ', error);
-          });
+    // axios.post('http://localhost:8080/api/studentdata', studentList)
+    //       .then(response => {
+    //         console.log('Success: ', response.data);
+    //       })
+    //       .catch(error => {
+    //         console.error('ERROR: ', error);
+    //       });
   }
 
   const handleGenerate = () => {
@@ -112,7 +113,7 @@ const App = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentDataChange} data={data} />
+            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave} data={data} />
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">
