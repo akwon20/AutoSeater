@@ -26,7 +26,7 @@ public class AutoseaterIntegrationTests {
 	}
 
     @Test
-    public void returnsHelloWorld() {
+    public void doesReturnHelloWorld() {
         assertThat(this.restTemplate.getForObject(
             "http://localhost:" +
             port +
