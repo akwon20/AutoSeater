@@ -4,15 +4,23 @@ import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringBootTest
 class AutoseaterApplicationTests {
 
+    @Autowired
+    private InputController controller;
+
 	@Test
 	void contextLoads() {
+        assertThat(controller).isNotNull();
+        System.out.println("contextLoads() successful");
 	}
 
 	@Test
