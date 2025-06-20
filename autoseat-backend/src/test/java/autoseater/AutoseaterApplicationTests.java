@@ -48,10 +48,4 @@ class AutoseaterApplicationTests {
 
         Assertions.assertNotEquals(2, testStudentList.size());
     }
-
-    @Test
-    public void checkIntegration() {
-
-    }
-
 }
