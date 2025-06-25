@@ -43,19 +43,14 @@ public class InputController {
     }
 
     @PostMapping("/studentdatapost")
-    public void updateStudentData(@RequestBody String studentList) {
-        // System.out.println("Student List: " + studentList);
-
-        // Map<String, String> response = new HashMap();
-
-        // response.put("studentList", studentList);
-
-        // return ResponseEntity.ok(response);
+    public ResponseEntity<String> updateStudentData(@RequestBody String studentList) {
         System.out.println("Student List: " + studentList);
 
         String names[] = studentList.split("\n");
 
         mainApp.updateStudentList(names);
+
+        return ResponseEntity.ok("Student data received! \n" + names);
     }
 
 }
