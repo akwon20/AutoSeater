@@ -56,6 +56,7 @@ const App = () => {
   };
 
   const handleStudentSave = (e) => {
+
     e.preventDefault();
     console.log("Save Students clicked!");
     console.log("Current list: ", studentList);
@@ -64,12 +65,14 @@ const App = () => {
       studentList
     };
 
-    axios.post('http://localhost:8080/api/studentdata', newPost)
+    axios.post('http://localhost:8080/api/studentdatapost', newPost)
           .then(response => {
             console.log('Success: ', response.data);
           })
           .catch(error => {
             console.error('ERROR: ', error);
+            setErrorMessage(error.message);
+            handleShow();
           });
   };
 
