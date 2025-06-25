@@ -43,10 +43,23 @@ public class InputController {
     }
 
     @PostMapping("/studentdatapost")
-    public ResponseEntity<String> updateStudentData(@RequestBody String studentList) {
-        System.out.println("Student List: " + studentList);
+    public ResponseEntity<String> updateStudentData(@RequestBody Map<String, String> studentList) {
 
-        String names[] = studentList.split("\n");
+        String listValue = "";
+
+        for (Map.Entry<String, String> entry : studentList.entrySet()) {
+            listValue = entry.getValue();
+        }
+
+        System.out.println("Student List: " + listValue);
+
+        String names[] = listValue.split("\\n");
+
+        System.out.println("List size: " + names.length);
+
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(names[i]);
+        }
 
         mainApp.updateStudentList(names);
 

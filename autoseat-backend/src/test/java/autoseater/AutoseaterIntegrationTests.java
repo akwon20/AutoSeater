@@ -35,4 +35,5 @@ public class AutoseaterIntegrationTests {
             String.class)).contains("Hello World!");
     }
 
+
 }
