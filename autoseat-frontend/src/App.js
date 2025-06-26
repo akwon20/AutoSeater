@@ -61,19 +61,36 @@ const App = () => {
     console.log("Save Students clicked!");
     console.log("Current list: ", studentList);
 
-    const newPost = {
-      studentList
-    };
+    if (studentList.length > 0) {
+      const newPost = {
+        studentList
+      };
 
-    axios.post('http://localhost:8080/api/studentdatapost', newPost)
-          .then(response => {
-            console.log('Success: ', response.data);
-          })
-          .catch(error => {
-            console.error('ERROR: ', error);
-            setErrorMessage(error.message);
-            handleShow();
-          });
+      axios.post('http://localhost:8080/api/studentdatapost', newPost)
+            .then(response => {
+              console.log('Success: ', response.data);
+            })
+            .catch(error => {
+              console.error('ERROR: ', error);
+              setErrorMessage(error.message);
+              handleShow();
+            });
+    }
+    else {
+      throw new Error('No input made.' + '\n' +  'Please input a list of students.');
+    }
+
+
+    try {
+      setStudentData(axios.get('http://localhost:8080/api/studentdataget')
+      .then(response => {
+        console.log('Success: ', response.data);
+      }));
+    } catch (error) {
+      console.error('ERROR: ', error);
+      setErrorMessage(error.message);
+      handleShow();
+    }
   };
 
   const handleGenerate = () => {
@@ -82,6 +99,10 @@ const App = () => {
     console.log("Column Count: " + colInput);
 
     try {
+      if (studentData.length < 1) {
+        throw new Error('No students available.' + '\n' + 'Make sure to click "Save Students" after inputting the student list.');
+      }
+
       if (isIntegerString(rowInput) && isIntegerString(colInput)) {
         setRowCount(rowInput);
         setColCount(colInput);
@@ -90,7 +111,7 @@ const App = () => {
         console.log("Column Count: " + colCount);
       }
       else {
-        throw new Error('Row and column inputs must be integer values!')
+        throw new Error('Row and column inputs must be integer values!');
       }
 
       if (canvasRef.current) {

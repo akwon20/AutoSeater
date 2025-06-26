@@ -33,7 +33,7 @@ public class InputController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/studentnamesget")
+    @GetMapping("/studentdataget")
     public ResponseEntity<Map<String, List<Student>>> getStudentNames() {
         Map<String, List<Student>> response = new HashMap();
 
