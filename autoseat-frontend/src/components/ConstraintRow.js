@@ -26,7 +26,7 @@ const ConstraintRow = (props) => {
             </Form.Select>
             <Form.Select className="select-dim-custom" size="sm" value={val2} onChange={e => setVal2(e.target.value)}>
                 {
-                    data.map(opt => <option>{opt}</option>)
+                    data.map(opt => <option>{opt.name}</option>)
                 }
             </Form.Select>
             <Button variant="danger" size="sm" style={{ width: "34px", height: "34px" }} onClick={props.onClick}>X</Button>

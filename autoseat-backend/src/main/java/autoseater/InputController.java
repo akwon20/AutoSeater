@@ -1,5 +1,6 @@
 package autoseater;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +35,27 @@ public class InputController {
     }
 
     @GetMapping("/studentdataget")
-    public ResponseEntity<Map<String, List<Student>>> getStudentNames() {
+    public ResponseEntity<Map<String, List<Student>>> getStudentData() {
         Map<String, List<Student>> response = new HashMap();
 
         response.put("students", mainApp.getStudents());
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/studentnamesget")
+    public String[] getStudentNames() {
+        String[] nameArr;
+        List<String> names = new ArrayList<String>();
+        List<Student> students = mainApp.getStudents();
+
+        for (int i = 0; i < students.size(); i++) {
+            names.add(students.get(i).getName());
+        }
+
+        nameArr = names.toArray(new String[0]);
+
+        return nameArr;
     }
 
     @PostMapping("/studentdatapost")

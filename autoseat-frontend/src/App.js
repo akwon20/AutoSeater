@@ -28,7 +28,7 @@ const App = () => {
   const [rowCount, setRowCount] = useState();
   const [colCount, setColCount] = useState();
   const [studentList, setStudentList] = useState("");
-  const [studentData, setStudentData] = useState([])
+  const [studentNames, setStudentNames] = useState([])
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -51,8 +51,19 @@ const App = () => {
     setStudentList(e.target.value);
   };
 
-  const handleStudentDataChange = (e) => {
-    setStudentData(e.target.value);
+  const handleStudentNamesChange = (obj) => {
+    // setStudentNames(e.target.value);
+    var json_obj = obj;
+    var name;
+    var names = [];
+
+    for (name in json_obj) {
+      names.push(name);
+    }
+
+    console.log(names);
+
+    setStudentNames(names);
   };
 
   const handleStudentSave = (e) => {
@@ -82,10 +93,11 @@ const App = () => {
 
 
     try {
-      setStudentData(axios.get('http://localhost:8080/api/studentdataget')
+      var obj = axios.get('http://localhost:8080/api/studentnamesget')
       .then(response => {
         console.log('Success: ', response.data);
-      }));
+      });
+      handleStudentNamesChange(obj);
     } catch (error) {
       console.error('ERROR: ', error);
       setErrorMessage(error.message);
@@ -99,7 +111,7 @@ const App = () => {
     console.log("Column Count: " + colInput);
 
     try {
-      if (studentData.length < 1) {
+      if (studentNames.length < 1) {
         throw new Error('No students available.' + '\n' + 'Make sure to click "Save Students" after inputting the student list.');
       }
 
@@ -135,7 +147,7 @@ const App = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave} data={data} />
+            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave} data={studentNames} />
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">
