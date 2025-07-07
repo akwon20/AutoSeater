@@ -28,7 +28,7 @@ const App = () => {
   const [rowCount, setRowCount] = useState();
   const [colCount, setColCount] = useState();
   const [studentList, setStudentList] = useState("");
-  const [studentNames, setStudentNames] = useState([])
+  const [studentNames, setStudentNames] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -56,6 +56,7 @@ const App = () => {
     var json_obj = obj;
     var name;
     var names = [];
+    // var names = JSON.parse(json_obj);
 
     for (name in json_obj) {
       names.push(name);
