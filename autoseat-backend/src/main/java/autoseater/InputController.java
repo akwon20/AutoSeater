@@ -55,6 +55,10 @@ public class InputController {
 
         nameArr = names.toArray(new String[0]);
 
+        for (int j = 0; j < nameArr.length; j++) {
+            System.out.println(nameArr[j]);
+        }
+
         return nameArr;
     }
 
