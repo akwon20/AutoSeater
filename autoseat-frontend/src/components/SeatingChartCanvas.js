@@ -33,7 +33,14 @@ const SeatingChartCanvas = ({ref, width, height, rowCount, colCount}) => {
 
         for (let col = 0; col < colCount; col++) {
             cols.push(
-                <Col md={2}>
+                <Col style={{
+                    width: '130px',
+                    height: '100px',
+                    border: '1px solid black',
+                    padding: '10px',
+                    alignContent: 'center'
+                    }}
+                    md={2}>
                     Row {row} Col {col}
                 </Col>
             );
