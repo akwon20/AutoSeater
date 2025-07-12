@@ -44,7 +44,7 @@ public class InputController {
     }
 
     @GetMapping("/studentnamesget")
-    public String[] getStudentNames() {
+    public List<String> getStudentNames() {
         String[] nameArr;
         List<String> names = new ArrayList<String>();
         List<Student> students = mainApp.getStudents();
@@ -53,13 +53,14 @@ public class InputController {
             names.add(students.get(i).getName());
         }
 
-        nameArr = names.toArray(new String[0]);
+        // nameArr = names.toArray(new String[0]);
 
-        for (int j = 0; j < nameArr.length; j++) {
-            System.out.println(nameArr[j]);
-        }
+        // for (int j = 0; j < nameArr.length; j++) {
+        //     System.out.println(nameArr[j]);
+        // }
 
-        return nameArr;
+        // return ResponseEntity.ok(names);
+        return names;
     }
 
     @PostMapping("/studentdatapost")

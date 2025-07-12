@@ -53,10 +53,11 @@ const App = () => {
 
   const handleStudentNamesChange = (obj) => {
     // setStudentNames(e.target.value);
-    var json_obj = obj;
+    var json_obj = obj.data;
     var name;
     var names = [];
     // var names = JSON.parse(json_obj);
+    console.log("Current array: ", json_obj);
 
     for (name in json_obj) {
       names.push(name);
@@ -67,7 +68,7 @@ const App = () => {
     setStudentNames(names);
   };
 
-  const handleStudentSave = (e) => {
+  const handleStudentSave = async (e) => {
 
     e.preventDefault();
     console.log("Save Students clicked!");
@@ -78,7 +79,7 @@ const App = () => {
         studentList
       };
 
-      axios.post('http://localhost:8080/api/studentdatapost', newPost)
+      await axios.post('http://localhost:8080/api/studentdatapost', newPost)
             .then(response => {
               console.log('Success: ', response.data);
             })
@@ -92,18 +93,17 @@ const App = () => {
       throw new Error('No input made.' + '\n' +  'Please input a list of students.');
     }
 
-
-    try {
-      var obj = axios.get('http://localhost:8080/api/studentnamesget')
+    await axios.get('http://localhost:8080/api/studentnamesget')
       .then(response => {
         console.log('Success: ', response.data);
+        // handleStudentNamesChange(response.data);
+        setStudentNames(response.data);
+      })
+      .catch(error => {
+              console.error('ERROR: ', error);
+              setErrorMessage(error.message);
+              handleShow()
       });
-      handleStudentNamesChange(obj);
-    } catch (error) {
-      console.error('ERROR: ', error);
-      setErrorMessage(error.message);
-      handleShow();
-    }
   };
 
   const handleGenerate = () => {
