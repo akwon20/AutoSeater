@@ -7,6 +7,12 @@ import './Tab.css';
 const ConstraintRow = (props) => {
     const [val1, setVal1] = useState('');
     const [val2, setVal2] = useState('');
+    const [condition, setCondition] = useState('');
+
+    const conditionOpts = [
+        { value: '=', label: "next to" },
+        { value: '!=', label: "away from" },
+    ];
 
     const key = props.key;
     const data = props.data;
@@ -20,9 +26,10 @@ const ConstraintRow = (props) => {
                     data.map(opt => <option>{opt}</option>)
                 }
             </Form.Select>
-            <Form.Select className="select-middle-dim-custom" size="sm">
-                <option>next to</option>
-                <option>away from</option>
+            <Form.Select className="select-middle-dim-custom" size="sm" value={condition} onChange={e => setCondition(e.target.value)}>
+                {
+                    conditionOpts.map(opt => <option>{opt.label}</option>)
+                }
             </Form.Select>
             <Form.Select className="select-dim-custom" size="sm" value={val2} onChange={e => setVal2(e.target.value)}>
                 {
