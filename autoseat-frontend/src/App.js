@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 
+import AlertSaved from './components/AlertSaved.js';
 import CustomErrorModal from './components/CustomErrorModal.js';
 import SeatingChartCanvas from './components/SeatingChartCanvas.js';
 import TabStudCon from './components/TabStudCon.js';
@@ -17,6 +18,7 @@ import './components/SeatingChartContainer.css';
 
 const App = () => {
   const [show, setShow] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const canvasWidth = "450px";
@@ -38,6 +40,8 @@ const App = () => {
   const isIntegerString = (str) => {
     return /^-?\d+$/.test(str);
   };
+
+
 
   const handleChangeRowInput = (e) => {
     setRowInput(e.target.value);
@@ -176,6 +180,7 @@ const App = () => {
       </Container>
 
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
+      {/* <AlertSaved show={showSaved} /> */}
     </div>
 
   );
