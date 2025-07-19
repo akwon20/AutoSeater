@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from 'react-bootstrap/button';
 import Form from 'react-bootstrap/Form';
@@ -8,6 +8,7 @@ const ConstraintRow = (props) => {
     const [val1, setVal1] = useState('');
     const [val2, setVal2] = useState('');
     const [condition, setCondition] = useState('');
+    const [constraint, setConstraint] = useState('');
 
     const conditionOpts = [
         { value: '=', label: "next to" },
@@ -17,7 +18,10 @@ const ConstraintRow = (props) => {
     const key = props.key;
     const data = props.data;
 
-    console.log(key);
+    useEffect(() => {
+        setConstraint(val1 + ' ' + condition + ' ' + val2);
+        console.log(constraint);
+    });
 
     return (
         <div key={key} className="d-flex mb-3 justify-content-between">
@@ -28,7 +32,7 @@ const ConstraintRow = (props) => {
             </Form.Select>
             <Form.Select className="select-middle-dim-custom" size="sm" value={condition} onChange={e => setCondition(e.target.value)}>
                 {
-                    conditionOpts.map(opt => <option>{opt.label}</option>)
+                    conditionOpts.map(opt => <option value={opt.value}>{opt.label}</option>)
                 }
             </Form.Select>
             <Form.Select className="select-dim-custom" size="sm" value={val2} onChange={e => setVal2(e.target.value)}>
