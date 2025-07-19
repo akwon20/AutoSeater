@@ -11,18 +11,11 @@ import './TextArea.css';
 
 const TabStudCon = (props) => {
     const data = props.data;
-    // const constraintRows = props.constraintRows;
-    // const addConstraintHandler = props.addConstraintHandler;
-    // const removeConstraintHandler = props.removeConstraintHandler;
 
     const studentListChangeHandler = props.studentListChangeHandler;
     const studentDataSaveHandler = props.saveStudentDataHandler;
 
     const [constraintRows, setConstraintRows] = useState([]);
-
-    const saveStudentList = () => {
-        console.log("Save Students clicked!");
-    }
 
     const addConstraintRow = () => {
         console.log("Add Constraint clicked!");
@@ -37,17 +30,8 @@ const TabStudCon = (props) => {
     const removeConstraintRow = (id) => {
         console.log("Remove button clicked!");
         console.log("Row to be removed: ", id);
-        // let newConstraintRows = [...constraintRows];
-        // newConstraintRows.splice(id, 1);
-        // setConstraintRows(newConstraintRows);
 
         setConstraintRows(constraintRows.filter((constraintRow) => {return constraintRow.id !== id}));
-
-        // setConstraintRows((prevState) => {
-        //     let newConstraintRows = [...prevState];
-        //     newConstraintRows.splice(id, 1);
-        //     return newConstraintRows;
-        // });
     }
 
     return (

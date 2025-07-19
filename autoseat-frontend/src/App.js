@@ -35,13 +35,9 @@ const App = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const data = ['Student 1', 'Student 2', 'Student 3', 'The Life of Pi'];
-
   const isIntegerString = (str) => {
     return /^-?\d+$/.test(str);
   };
-
-
 
   const handleChangeRowInput = (e) => {
     setRowInput(e.target.value);
@@ -55,25 +51,7 @@ const App = () => {
     setStudentList(e.target.value);
   };
 
-  const handleStudentNamesChange = (obj) => {
-    // setStudentNames(e.target.value);
-    var json_obj = obj.data;
-    var name;
-    var names = [];
-    // var names = JSON.parse(json_obj);
-    console.log("Current array: ", json_obj);
-
-    for (name in json_obj) {
-      names.push(name);
-    }
-
-    console.log(names);
-
-    setStudentNames(names);
-  };
-
   const handleStudentSave = async (e) => {
-
     e.preventDefault();
     console.log("Save Students clicked!");
     console.log("Current list: ", studentList);
