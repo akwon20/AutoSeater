@@ -19,23 +19,34 @@ const ConstraintRow = (props) => {
     const data = props.data;
 
     useEffect(() => {
-        setConstraint(val1 + ' ' + condition + ' ' + val2);
         console.log(constraint);
     });
 
     return (
         <div key={key} className="d-flex mb-3 justify-content-between">
-            <Form.Select className="select-dim-custom" size="sm" value={val1} onChange={e => setVal1(e.target.value)}>
+            <Form.Select className="select-dim-custom" size="sm" value={val1}
+            onChange={(e) => {
+                setVal1(e.target.value);
+                setConstraint(val1 + ' ' + condition + ' ' + val2);
+            }}>
                 {
                     data.map(opt => <option>{opt}</option>)
                 }
             </Form.Select>
-            <Form.Select className="select-middle-dim-custom" size="sm" value={condition} onChange={e => setCondition(e.target.value)}>
+            <Form.Select className="select-middle-dim-custom" size="sm" value={condition}
+            onChange={(e) => {
+                setCondition(e.target.value);
+                setConstraint(val1 + ' ' + condition + ' ' + val2);
+            }}>
                 {
                     conditionOpts.map(opt => <option value={opt.value}>{opt.label}</option>)
                 }
             </Form.Select>
-            <Form.Select className="select-dim-custom" size="sm" value={val2} onChange={e => setVal2(e.target.value)}>
+            <Form.Select className="select-dim-custom" size="sm" value={val2}
+            onChange={(e) => {
+                setVal2(e.target.value);
+                setConstraint(val1 + ' ' + condition + ' ' + val2);
+            }}>
                 {
                     data.map(opt => <option>{opt}</option>)
                 }
