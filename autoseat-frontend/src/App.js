@@ -88,6 +88,18 @@ const App = () => {
       });
   };
 
+  const handleConstraintAdd = () => {
+
+  }
+
+  const handleConstraintRemove = () => {
+
+  }
+
+  const handleConstraintUpdate = () => {
+
+  }
+
   const handleGenerate = () => {
     console.log("Generate button clicked!");
     console.log("Row Count: " + rowInput);
