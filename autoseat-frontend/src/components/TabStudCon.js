@@ -17,10 +17,12 @@ const TabStudCon = (props) => {
 
     const [constraintRows, setConstraintRows] = useState([]);
 
+    const id = Date.now();
+
     const addConstraintRow = () => {
         console.log("Add Constraint clicked!");
         const newConstraintRow = {
-            id: Date.now(),
+            id: id,
             data: data,
         };
 
