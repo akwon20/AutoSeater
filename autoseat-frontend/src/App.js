@@ -32,6 +32,8 @@ const App = () => {
   const [studentList, setStudentList] = useState("");
   const [studentNames, setStudentNames] = useState([]);
 
+  const [constraintList, setConstraintList] = useState([]);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -88,16 +90,30 @@ const App = () => {
       });
   };
 
-  const handleConstraintAdd = () => {
+  const handleConstraintAdd = (newId) => {
+    console.log("handleConstraintAdd() called!");
+    console.log("Row to be added: ", newId);
+    const newConstraint = {
+      id: newId,
+      constraint: '',
+    };
 
+    setConstraintList([...constraintList, newConstraint]);
   }
 
-  const handleConstraintRemove = () => {
-
+  const handleConstraintRemove = (i) => {
+    console.log("handleConstraintRemove() called!");
+    console.log("Removing row ", i);
+    setConstraintList(constraintList.filter((constraint) => {return constraint.id !== i}));
   }
 
-  const handleConstraintUpdate = () => {
-
+  const handleConstraintUpdate = (index, newConstraintArr) => {
+    console.log("handleConstraintUpdate() called!");
+    const newConstraint = newConstraintArr.join(' ');
+    setConstraintList(
+        prevConstraints =>
+            prevConstraints.map((item, i) => (i === index ? { ...item, constraint: newConstraint } : item))
+    );
   }
 
   const handleGenerate = () => {
@@ -142,7 +158,9 @@ const App = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave} data={studentNames} />
+            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
+            constraintAddHandler={handleConstraintAdd} constraintRemoveHandler={handleConstraintRemove} constraintUpdateHandler={handleConstraintUpdate}
+            data={studentNames} />
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">

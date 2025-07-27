@@ -15,18 +15,23 @@ const TabStudCon = (props) => {
     const studentListChangeHandler = props.studentListChangeHandler;
     const studentDataSaveHandler = props.saveStudentDataHandler;
 
+    const constraintAddHandler = props.constraintAddHandler;
+    const constraintRemoveHandler = props.constraintRemoveHandler;
+    const constraintUpdateHandler = props.constraintUpdateHandler;
+
     const [constraintRows, setConstraintRows] = useState([]);
 
-    const id = Date.now();
-
     const addConstraintRow = () => {
+        const newId = Date.now();
+
         console.log("Add Constraint clicked!");
         const newConstraintRow = {
-            id: id,
+            id: newId,
             data: data,
         };
 
         setConstraintRows([...constraintRows, newConstraintRow]);
+        constraintAddHandler(newId);
     }
 
     const removeConstraintRow = (id) => {
@@ -34,6 +39,7 @@ const TabStudCon = (props) => {
         console.log("Row to be removed: ", id);
 
         setConstraintRows(constraintRows.filter((constraintRow) => {return constraintRow.id !== id}));
+        constraintRemoveHandler(id);
     }
 
     return (
