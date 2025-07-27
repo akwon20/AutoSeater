@@ -99,21 +99,28 @@ const App = () => {
     };
 
     setConstraintList([...constraintList, newConstraint]);
+
+    console.log("New constraints: ", constraintList);
   }
 
   const handleConstraintRemove = (i) => {
     console.log("handleConstraintRemove() called!");
     console.log("Removing row ", i);
     setConstraintList(constraintList.filter((constraint) => {return constraint.id !== i}));
+
+    console.log("New constraints: ", constraintList);
   }
 
   const handleConstraintUpdate = (index, newConstraintArr) => {
     console.log("handleConstraintUpdate() called!");
+    console.log("Constraint to be updated: ", index);
     const newConstraint = newConstraintArr.join(' ');
     setConstraintList(
         prevConstraints =>
             prevConstraints.map((item, i) => (i === index ? { ...item, constraint: newConstraint } : item))
     );
+
+    console.log("New constraints: ", constraintList);
   }
 
   const handleGenerate = () => {
