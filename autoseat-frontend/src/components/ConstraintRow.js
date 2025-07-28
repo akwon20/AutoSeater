@@ -5,14 +5,14 @@ import Form from 'react-bootstrap/Form';
 import './Tab.css';
 
 const ConstraintRow = (props) => {
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
-    const [condition, setCondition] = useState('');
-    const [constraint, setConstraint] = useState('');
+    // const [val1, setVal1] = useState('');
+    // const [val2, setVal2] = useState('');
+    // const [condition, setCondition] = useState('');
+    // const [constraint, setConstraint] = useState('');
 
     const [constraintInput, setConstraintInput] = useState(['', '', '']);
 
-    const constraintRef = useRef(constraint);
+    const constraintChangeHandler = props.constraintChangeHandler;
 
     const conditionOpts = [
         { value: '=', label: "next to" },
@@ -22,9 +22,9 @@ const ConstraintRow = (props) => {
     const key = props.key;
     const data = props.data;
 
-    useEffect(() => {
-        console.log("Constraint: ", constraintInput);
-    }, [constraintInput]);
+    // useEffect(() => {
+    //     console.log("Constraint: ", constraintInput);
+    // }, [constraintInput]);
 
     // 0 = val1, 1 = condition, 2 = val2
     const updateConstraintValue = (index, newInput) => {
@@ -47,11 +47,14 @@ const ConstraintRow = (props) => {
             prevInputs =>
                 prevInputs.map((input, i) => (i === index ? newInput : input))
         );
+        console.log("Constraint input updated!");
+
+        constraintChangeHandler(index, constraintInput);
     };
 
     return (
         <div key={key} className="d-flex mb-3 justify-content-between">
-            <Form.Select className="select-dim-custom" size="sm" value={val1}
+            <Form.Select className="select-dim-custom" size="sm"
             onChange={(e) => {
                 // setVal1(e.target.value);
                 // setConstraint((prevConstraint) => prevConstraint = val1 + ' ' + condition + ' ' + val2);
@@ -62,7 +65,7 @@ const ConstraintRow = (props) => {
                     data.map(opt => <option>{opt}</option>)
                 }
             </Form.Select>
-            <Form.Select className="select-middle-dim-custom" size="sm" value={condition}
+            <Form.Select className="select-middle-dim-custom" size="sm"
             onChange={(e) => {
                 // setCondition(e.target.value);
                 // setConstraint((prevConstraint) => prevConstraint = val1 + ' ' + condition + ' ' + val2);
@@ -73,7 +76,7 @@ const ConstraintRow = (props) => {
                     conditionOpts.map(opt => <option value={opt.value}>{opt.label}</option>)
                 }
             </Form.Select>
-            <Form.Select className="select-dim-custom" size="sm" value={val2}
+            <Form.Select className="select-dim-custom" size="sm"
             onChange={(e) => {
                 // setVal2(e.target.value);
                 // setConstraint((prevConstraint) => prevConstraint = val1 + ' ' + condition + ' ' + val2);
