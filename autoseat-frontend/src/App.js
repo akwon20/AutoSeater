@@ -111,14 +111,24 @@ const App = () => {
     console.log("New constraints: ", constraintList);
   }
 
-  const handleConstraintUpdate = (index, newConstraintArr) => {
+  const handleConstraintUpdate = (idTarget, newConstraintArr) => {
     console.log("handleConstraintUpdate() called!");
-    console.log("Constraint to be updated: ", index);
+    console.log("Constraint to be updated: ", idTarget);
+    console.log("Constraint array: ", newConstraintArr);
     const newConstraint = newConstraintArr.join(' ');
-    setConstraintList(
-        prevConstraints =>
-            prevConstraints.map((item, i) => (i === index ? { ...item, constraint: newConstraint } : item))
-    );
+    console.log("Constraint to be updated: ", newConstraint);
+
+    // FIXME: Stale state here!
+    const updatedConstraintList = constraintList.map(item => {
+      if (item.id === idTarget) {
+        return {...item, constraint: newConstraint};
+      } else {
+        return item;
+      }
+    });
+
+    setConstraintList(updatedConstraintList);
+
 
     console.log("New constraints: ", constraintList);
   }
