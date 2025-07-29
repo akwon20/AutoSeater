@@ -1,12 +1,8 @@
-import { useState, useEffect } from 'react';
-
 import Button from 'react-bootstrap/button';
 import Form from 'react-bootstrap/Form';
 import './Tab.css';
 
 const ConstraintRow = (props) => {
-    // const [constraintInput, setConstraintInput] = useState(['', '', '']);
-
     const constraintChangeHandler = props.constraintChangeHandler;
 
     const conditionOpts = [
@@ -22,15 +18,6 @@ const ConstraintRow = (props) => {
     const updateConstraintValue = (index, newInput) => {
         console.log("updateConstraintValue() called!");
         console.log("Updating index ", index, " with ", newInput);
-
-        // const newConstraint = newInput;
-
-        // FIXME: Stale state here!!!
-        // setConstraintInput(
-        //     (prevInputs) =>
-        //         prevInputs.map((item, i) => (i === index ? newConstraint : item))
-        // );
-        // console.log("Constraint input updated!");
 
         constraintChangeHandler(id, index, newInput);
     };

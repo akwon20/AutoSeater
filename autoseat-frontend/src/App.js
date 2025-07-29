@@ -118,25 +118,6 @@ const App = () => {
     console.log("Constraint to be updated: ", index);
     console.log("New constraint: ", newConstraint);
 
-    // const idFound = constraintList.find(constraintIndex => constraintIndex.id === idTarget);
-    // const newConstraintArr = [];
-
-    // if (idFound) {
-    //   newConstraintArr = idFound.constraint;
-    // }
-
-    // newConstraintArr[index] = newConstraint;
-
-    // const updatedConstraintList = constraintList.map(item => {
-    //   if (item.id === idTarget) {
-    //     return {...item, constraint: newConstraintArr};
-    //   } else {
-    //     return item;
-    //   }
-    // });
-
-    // setConstraintList(updatedConstraintList);
-
     setConstraintList(prevConstraintList =>
       prevConstraintList.map(obj => {
         if (obj.id === idTarget) {
