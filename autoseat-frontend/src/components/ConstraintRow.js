@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import './Tab.css';
 
 const ConstraintRow = (props) => {
-    const [constraintInput, setConstraintInput] = useState(['', '', '']);
+    // const [constraintInput, setConstraintInput] = useState(['', '', '']);
 
     const constraintChangeHandler = props.constraintChangeHandler;
 
@@ -15,6 +15,7 @@ const ConstraintRow = (props) => {
     ];
 
     const key = props.key;
+    const id = props.id;
     const data = props.data;
 
     // 0 = val1, 1 = condition, 2 = val2
@@ -22,13 +23,16 @@ const ConstraintRow = (props) => {
         console.log("updateConstraintValue() called!");
         console.log("Updating index ", index, " with ", newInput);
 
-        setConstraintInput(
-            (prevInputs) =>
-                prevInputs.map((input, i) => (i === index ? newInput : input))
-        );
-        console.log("Constraint input updated!");
+        // const newConstraint = newInput;
 
-        constraintChangeHandler(index, constraintInput);
+        // FIXME: Stale state here!!!
+        // setConstraintInput(
+        //     (prevInputs) =>
+        //         prevInputs.map((item, i) => (i === index ? newConstraint : item))
+        // );
+        // console.log("Constraint input updated!");
+
+        constraintChangeHandler(id, index, newInput);
     };
 
     return (
