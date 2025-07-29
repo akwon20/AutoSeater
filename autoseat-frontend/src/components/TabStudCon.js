@@ -66,7 +66,7 @@ const TabStudCon = (props) => {
                 <div className="d-grid gap-2">
                     <div style={{ maxWidth: "450px", height: "398px", overflowY: "auto" }}>
                         {constraintRows.map((constraintRow) => (
-                            <ConstraintRow key={constraintRow.id} constraintChangeHandler={constraintUpdateHandler} data={data} onClick={() => removeConstraintRow(constraintRow.id)}/>
+                            <ConstraintRow key={constraintRow.id} id={constraintRow.id} constraintChangeHandler={constraintUpdateHandler} data={data} onClick={() => removeConstraintRow(constraintRow.id)}/>
                         ))}
                     </div>
                     <Button variant="primary" size="lg" onClick={addConstraintRow}>Add Constraints</Button>
