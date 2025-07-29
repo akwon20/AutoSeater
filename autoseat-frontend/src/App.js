@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Button from 'react-bootstrap/button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -32,7 +32,12 @@ const App = () => {
   const [studentList, setStudentList] = useState("");
   const [studentNames, setStudentNames] = useState([]);
 
+  // FIXME: Stale state!!!
   const [constraintList, setConstraintList] = useState([]);
+
+  useEffect(() => {
+    console.log("Current constraints: ", constraintList);
+  }, [constraintList]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -95,42 +100,55 @@ const App = () => {
     console.log("Row to be added: ", newId);
     const newConstraint = {
       id: newId,
-      constraint: '',
+      constraint: ['', '', ''],
     };
 
-    setConstraintList([...constraintList, newConstraint]);
-
-    console.log("New constraints: ", constraintList);
+    setConstraintList((prevConstraintList) => [...prevConstraintList, newConstraint]);
   }
 
   const handleConstraintRemove = (i) => {
     console.log("handleConstraintRemove() called!");
     console.log("Removing row ", i);
     setConstraintList(constraintList.filter((constraint) => {return constraint.id !== i}));
-
-    console.log("New constraints: ", constraintList);
   }
 
-  const handleConstraintUpdate = (idTarget, newConstraintArr) => {
+  const handleConstraintUpdate = (idTarget, index, newConstraint) => {
     console.log("handleConstraintUpdate() called!");
-    console.log("Constraint to be updated: ", idTarget);
-    console.log("Constraint array: ", newConstraintArr);
-    const newConstraint = newConstraintArr.join(' ');
-    console.log("Constraint to be updated: ", newConstraint);
+    console.log("Constraint row key: ", idTarget);
+    console.log("Constraint to be updated: ", index);
+    console.log("New constraint: ", newConstraint);
 
-    // FIXME: Stale state here!
-    const updatedConstraintList = constraintList.map(item => {
-      if (item.id === idTarget) {
-        return {...item, constraint: newConstraint};
-      } else {
-        return item;
-      }
-    });
+    // const idFound = constraintList.find(constraintIndex => constraintIndex.id === idTarget);
+    // const newConstraintArr = [];
 
-    setConstraintList(updatedConstraintList);
+    // if (idFound) {
+    //   newConstraintArr = idFound.constraint;
+    // }
 
+    // newConstraintArr[index] = newConstraint;
 
-    console.log("New constraints: ", constraintList);
+    // const updatedConstraintList = constraintList.map(item => {
+    //   if (item.id === idTarget) {
+    //     return {...item, constraint: newConstraintArr};
+    //   } else {
+    //     return item;
+    //   }
+    // });
+
+    // setConstraintList(updatedConstraintList);
+
+    setConstraintList(prevConstraintList =>
+      prevConstraintList.map(obj => {
+        if (obj.id === idTarget) {
+          const newConstraintArr = [...obj.constraint];
+          newConstraintArr[index] = newConstraint;
+
+          return {...obj, constraint: newConstraintArr};
+        }
+
+        return obj;
+      })
+    );
   }
 
   const handleGenerate = () => {
