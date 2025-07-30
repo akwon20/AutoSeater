@@ -6,9 +6,10 @@ import Button from 'react-bootstrap/button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 import axios from 'axios';
 
-import AlertSaved from './components/AlertSaved.js';
 import CustomErrorModal from './components/CustomErrorModal.js';
 import SeatingChartCanvas from './components/SeatingChartCanvas.js';
 import TabStudCon from './components/TabStudCon.js';
@@ -32,7 +33,6 @@ const App = () => {
   const [studentList, setStudentList] = useState("");
   const [studentNames, setStudentNames] = useState([]);
 
-  // FIXME: Stale state!!!
   const [constraintList, setConstraintList] = useState([]);
 
   useEffect(() => {
@@ -41,6 +41,9 @@ const App = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleCloseSaved = () => setShowSaved(false);
+  const handleShowSaved = () => setShowSaved(true);
 
   const isIntegerString = (str) => {
     return /^-?\d+$/.test(str);
@@ -71,6 +74,7 @@ const App = () => {
       await axios.post('http://localhost:8080/api/studentdatapost', newPost)
             .then(response => {
               console.log('Success: ', response.data);
+              handleShowSaved();
             })
             .catch(error => {
               console.error('ERROR: ', error);
@@ -91,7 +95,7 @@ const App = () => {
       .catch(error => {
               console.error('ERROR: ', error);
               setErrorMessage(error.message);
-              handleShow()
+              handleShow();
       });
   };
 
@@ -140,6 +144,10 @@ const App = () => {
     try {
       if (studentNames.length < 1) {
         throw new Error('No students available.' + '\n' + 'Make sure to click "Save Students" after inputting the student list.');
+      }
+
+      for (let i = 0; i < constraintList.length; i++) {
+
       }
 
       if (isIntegerString(rowInput) && isIntegerString(colInput)) {
@@ -204,7 +212,15 @@ const App = () => {
       </Container>
 
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
-      {/* <AlertSaved show={showSaved} /> */}
+
+      <ToastContainer className="p-3" position="bottom-start">
+        <Toast show={showSaved} onClose={handleCloseSaved}>
+          <Toast.Header>
+            Alert
+          </Toast.Header>
+          <Toast.Body>Student list saved!</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
 
   );
