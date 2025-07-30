@@ -136,18 +136,36 @@ const App = () => {
     );
   }
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     console.log("Generate button clicked!");
     console.log("Row Count: " + rowInput);
     console.log("Column Count: " + colInput);
+
+    const constraintspost = [];
 
     try {
       if (studentNames.length < 1) {
         throw new Error('No students available.' + '\n' + 'Make sure to click "Save Students" after inputting the student list.');
       }
 
-      for (let i = 0; i < constraintList.length; i++) {
+      if (constraintList.length > 0) {
+        for (let i = 0; i < constraintList.length; i++) {
+          console.log("Current constraint: ", constraintList[i].constraint);
+          constraintspost.push(constraintList[i].constraint);
+        }
 
+        console.log("Constraint list to be sent: ", constraintspost);
+
+        await axios.post('http://localhost:8080/api/constraintpost', constraintspost)
+          .then(response => {
+            console.log('Success: ', response.data);
+            handleShowSaved();
+          })
+          .catch(error => {
+            console.error('ERROR: ', error);
+            setErrorMessage(error.message);
+            handleShow();
+          });
       }
 
       if (isIntegerString(rowInput) && isIntegerString(colInput)) {

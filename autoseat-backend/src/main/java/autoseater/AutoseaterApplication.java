@@ -75,6 +75,17 @@ public class AutoseaterApplication {
         rules.remove(removalIndex);
     }
 
+    public void setRules(List<String[]> rules) {
+        for (int i = 0; i < rules.size(); i++) {
+            if (rules.get(i)[1].equals("=")) {
+                // Pairs allowed
+            }
+            else if (rules.get(i)[1].equals("!=")) {
+                // Pairs restricted
+            }
+        }
+    }
+
     public static String inputName(List<Student> studentList) {
         String name = "";
         Boolean nameFound = false;

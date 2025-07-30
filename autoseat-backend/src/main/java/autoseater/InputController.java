@@ -65,7 +65,6 @@ public class InputController {
 
     @PostMapping("/studentdatapost")
     public ResponseEntity<String> updateStudentData(@RequestBody Map<String, String> studentList) {
-
         String listValue = "";
 
         for (Map.Entry<String, String> entry : studentList.entrySet()) {
@@ -85,6 +84,16 @@ public class InputController {
         mainApp.updateStudentList(names);
 
         return ResponseEntity.ok("Student data received! \n" + names);
+    }
+
+    @PostMapping("/constraintpost")
+    public ResponseEntity<String> updateConstraints(@RequestBody List<String[]> constraintList) {
+
+        // String[] newConstraints = ["Test", "Test 2"];
+
+        // return ResponseEntity.ok("Constraints received! \n" + newConstraints);
+
+        return ResponseEntity.ok("Constraint list received! \n" + constraintList);
     }
 
 }
