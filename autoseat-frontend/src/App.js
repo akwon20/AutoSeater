@@ -156,7 +156,7 @@ const App = () => {
 
         console.log("Constraint list to be sent: ", constraintspost);
 
-        await axios.post('http://localhost:8080/api/constraintpost', constraintspost)
+        await axios.post('http://localhost:8080/api/constraintspost', constraintspost)
           .then(response => {
             console.log('Success: ', response.data);
             handleShowSaved();
