@@ -151,25 +151,6 @@ public class AutoseaterApplication {
         return pairsForbidden_id;
     }
 
-    public static List<Integer[]> setSeatingPairs(List<Student> studentList, List<String[]> constraintList) {
-        List<Integer[]> rules = new ArrayList<Integer[]>();
-
-        for (int i = 0; i < constraintList.size(); i++) {
-            String name1 = constraintList.get(i)[0];
-            // String condition = constraintList.get(i)[1];
-            String name2 = constraintList.get(i)[2];
-
-            int id1 = getStudentIdByName(studentList, name1);
-            int id2 = getStudentIdByName(studentList, name2);
-
-            Integer[] pair = {id1, id2};
-
-            rules.add(pair);
-        }
-
-        return rules;
-    }
-
 	public static void main(String[] args) {
 		SpringApplication.run(AutoseaterApplication.class, args);
 
