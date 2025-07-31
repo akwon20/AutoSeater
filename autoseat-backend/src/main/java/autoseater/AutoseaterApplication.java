@@ -90,31 +90,6 @@ public class AutoseaterApplication {
         pairsForbidden_id.clear();
     }
 
-    public static String inputName(List<Student> studentList) {
-        String name = "";
-        Boolean nameFound = false;
-
-        while (true) {
-            name = scanner.nextLine();
-
-            for (Student student : studentList) {
-                if (student.getName().equals(name)) {
-                    nameFound = true;
-                    break;
-                }
-            }
-
-            if (!nameFound) {
-                System.out.println("Student not found! Try again.");
-            }
-            else {
-                break;
-            }
-        }
-
-        return name;
-    }
-
     public int getCountRows() {
         return countRows;
     }
