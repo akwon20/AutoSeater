@@ -75,17 +75,6 @@ public class AutoseaterApplication {
         rules.remove(removalIndex);
     }
 
-    public void setRules(List<String[]> rules) {
-        for (int i = 0; i < rules.size(); i++) {
-            if (rules.get(i)[1].equals("=")) {
-                // Pairs allowed
-            }
-            else if (rules.get(i)[1].equals("!=")) {
-                // Pairs restricted
-            }
-        }
-    }
-
     public static String inputName(List<Student> studentList) {
         String name = "";
         Boolean nameFound = false;
@@ -143,16 +132,13 @@ public class AutoseaterApplication {
         return "";
     }
 
-    public static List<Integer[]> setSeatingPairs(List<Student> studentList, int count) {
+    public static List<Integer[]> setSeatingPairs(List<Student> studentList, List<String[]> constraintList) {
         List<Integer[]> rules = new ArrayList<Integer[]>();
 
-        for (int i = 0; i < count; i++) {
-            System.out.println("Constraint " + i);
-            System.out.println("Enter Name 1: ");
-            String name1 = inputName(studentList);
-
-            System.out.println("Enter Name 2: ");
-            String name2 = inputName(studentList);
+        for (int i = 0; i < constraintList.size(); i++) {
+            String name1 = constraintList.get(i)[0];
+            // String condition = constraintList.get(i)[1];
+            String name2 = constraintList.get(i)[2];
 
             int id1 = getStudentIdByName(studentList, name1);
             int id2 = getStudentIdByName(studentList, name2);
