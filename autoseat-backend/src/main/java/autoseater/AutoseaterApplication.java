@@ -143,6 +143,14 @@ public class AutoseaterApplication {
         return "";
     }
 
+    public List<Integer[]> getPairsIdAllowed() {
+        return pairsAllowed_id;
+    }
+
+    public List<Integer[]> getPairsIdForbidden() {
+        return pairsForbidden_id;
+    }
+
     public static List<Integer[]> setSeatingPairs(List<Student> studentList, List<String[]> constraintList) {
         List<Integer[]> rules = new ArrayList<Integer[]>();
 
