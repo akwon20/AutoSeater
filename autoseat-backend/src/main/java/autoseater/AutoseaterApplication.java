@@ -81,13 +81,13 @@ public class AutoseaterApplication {
         }
     }
 
-    public void setConstraints(List<String[]> constraintList) {
-        rules = constraintList;
-    }
-
     public void resetRules() {
         pairsAllowed_id.clear();
         pairsForbidden_id.clear();
+    }
+
+    public void setConstraints(List<String[]> constraintList) {
+        rules = constraintList;
     }
 
     public int getCountRows() {
