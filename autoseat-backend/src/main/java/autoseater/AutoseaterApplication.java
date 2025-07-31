@@ -1,7 +1,7 @@
 package autoseater;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.chocosolver.solver.variables.IntVar;
@@ -16,7 +16,7 @@ public class AutoseaterApplication {
     private int countRows, countCols;
     private IntVar[][] seats;
     private List<Student> students;
-    private List<String> rules;
+    private List<String[]> rules;
     private List<Integer[]> pairsForbidden_id;
     private List<Integer[]> pairsAllowed_id;
 
@@ -25,7 +25,7 @@ public class AutoseaterApplication {
         countCols = 0;
         seats = null;
         students = new ArrayList<Student>();
-        rules = new ArrayList<String>();
+        rules = new ArrayList<String[]>();
         pairsForbidden_id = new ArrayList<Integer[]>();
         pairsAllowed_id = new ArrayList<Integer[]>();
     }
@@ -79,6 +79,10 @@ public class AutoseaterApplication {
         else if (condition.equals("!=")) {
             pairsForbidden_id.add(pair);
         }
+    }
+
+    public void setConstraints(List<String[]> constraintList) {
+        rules = constraintList;
     }
 
     public void resetRules() {
@@ -141,6 +145,10 @@ public class AutoseaterApplication {
         }
 
         return "";
+    }
+
+    public List<String[]> getConstraints() {
+        return rules;
     }
 
     public List<Integer[]> getPairsIdAllowed() {

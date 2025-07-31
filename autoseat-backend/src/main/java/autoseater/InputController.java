@@ -63,6 +63,11 @@ public class InputController {
         return names;
     }
 
+    @GetMapping("/constraintsget")
+    public List<String[]> getConstraints() {
+        return mainApp.getConstraints();
+    }
+
     @PostMapping("/studentdatapost")
     public ResponseEntity<String> updateStudentData(@RequestBody Map<String, String> studentList) {
         String listValue = "";
@@ -86,12 +91,24 @@ public class InputController {
         return ResponseEntity.ok("Student data received! \n" + names);
     }
 
-    @PostMapping("/constraintpost")
+    @PostMapping("/constraintspost")
     public ResponseEntity<String> updateConstraints(@RequestBody List<String[]> constraintList) {
+        mainApp.setConstraints(constraintList);
+
+        if (!mainApp.getPairsIdAllowed().isEmpty() || !mainApp.getPairsIdForbidden().isEmpty()) {
+            mainApp.resetRules();
+        }
 
         // String[] newConstraints = ["Test", "Test 2"];
 
         // return ResponseEntity.ok("Constraints received! \n" + newConstraints);
+        for (int i = 0; i < constraintList.size(); i++) {
+            String name1 = constraintList.get(i)[0];
+            String condition = constraintList.get(i)[1];
+            String name2 = constraintList.get(i)[2];
+
+            mainApp.addRule(name1, condition, name2);
+        }
 
         return ResponseEntity.ok("Constraint list received! \n" + constraintList);
     }
