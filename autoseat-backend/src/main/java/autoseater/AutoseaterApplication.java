@@ -67,12 +67,23 @@ public class AutoseaterApplication {
         }
     }
 
-    public void addRule(String ruleString) {
-        rules.add(ruleString);
+    public void addRule(String name1, String condition, String name2) {
+        int id1 = getStudentIdByName(students, name1);
+        int id2 = getStudentIdByName(students, name2);
+
+        Integer pair[] = {id1, id2};
+
+        if (condition.equals("=")) {
+            pairsAllowed_id.add(pair);
+        }
+        else if (condition.equals("!=")) {
+            pairsForbidden_id.add(pair);
+        }
     }
 
-    public void removeRule(int removalIndex) {
-        rules.remove(removalIndex);
+    public void resetRules() {
+        pairsAllowed_id.clear();
+        pairsForbidden_id.clear();
     }
 
     public static String inputName(List<Student> studentList) {
