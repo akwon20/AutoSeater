@@ -174,6 +174,21 @@ const App = () => {
 
         console.log("Row Count: " + rowCount);
         console.log("Column Count: " + colCount);
+
+        const newRowColCountPost = {
+          rows: rowCount,
+          cols: colCount,
+        };
+
+        await axios.post('http://localhost:8080/api/rowcolcountpost', newRowColCountPost)
+        .then(response => {
+          console.log('Success: ', response.data);
+        })
+        .catch(error => {
+            console.error('ERROR: ', error);
+            setErrorMessage(error.message);
+            handleShow();
+          });
       }
       else {
         throw new Error('Row and column inputs must be integer values!');

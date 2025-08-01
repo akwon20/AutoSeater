@@ -113,4 +113,22 @@ public class InputController {
         return ResponseEntity.ok("Constraint list received! \n" + constraintList);
     }
 
+    @PostMapping("rowcolcountpost")
+    public ResponseEntity<String> updateRowColCount(@RequestBody Map<String, Integer> countRowCol) {
+        Integer rowVal = countRowCol.get("rows");
+        Integer colVal = countRowCol.get("cols");
+
+        if ((rowVal != null) && (colVal != null)) {
+            int rows = rowVal;
+            int cols = colVal;
+
+            mainApp.setCountRows(rows);
+            mainApp.setCountCols(cols);
+
+            System.out.println("Rows: " + mainApp.getCountRows());
+            System.out.println("Cols: " + mainApp.getCountCols());
+
+        }
+        return ResponseEntity.ok("Row/Column count received!");
+    }
 }
