@@ -40,7 +40,7 @@ public class AutoseaterApplication {
         seats = assigner.assignSeats(countRows, countCols, pairsForbidden_id, pairsAllowed_id);
 
         for (int i = 0; i < countRows; i++) {
-            String seatCols[] = new String[5];
+            String seatCols[] = new String[countCols];
 
             for (int j = 0; j < countCols; j++) {
                 seatCols[j] = getStudentNameById(students, seats[i][j].getValue());
