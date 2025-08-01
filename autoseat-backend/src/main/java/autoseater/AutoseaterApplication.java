@@ -2,7 +2,6 @@ package autoseater;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import org.chocosolver.solver.variables.IntVar;
 import org.springframework.boot.SpringApplication;
@@ -10,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AutoseaterApplication {
-
-	static Scanner scanner;
-
     private int countRows, countCols;
     private IntVar[][] seats;
     private List<Student> students;
