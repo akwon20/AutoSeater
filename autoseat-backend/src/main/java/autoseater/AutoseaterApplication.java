@@ -34,21 +34,6 @@ public class AutoseaterApplication {
         return "Hello World!";
     }
 
-    public static int setCount() {
-        int count;
-
-        while (true) {
-            try {
-                count = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Try again.");
-            }
-        }
-
-        return count;
-    }
-
     public void setCountRows(int count) {
         countRows = count;
     }
