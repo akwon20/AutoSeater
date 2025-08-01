@@ -37,6 +37,10 @@ public class AutoseaterApplication {
     public List<String[]> assignSeats() {
         List<String[]> seatNames = new ArrayList<String[]>();
 
+        if (assigner.getModel() != null) {
+            assigner.resetModel();
+        }
+
         seats = assigner.assignSeats(countRows, countCols, pairsForbidden_id, pairsAllowed_id);
 
         for (int i = 0; i < countRows; i++) {

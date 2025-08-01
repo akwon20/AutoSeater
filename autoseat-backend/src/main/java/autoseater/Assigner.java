@@ -18,6 +18,14 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
+    public Model getModel() {
+        return model;
+    }
+
+    public void resetModel() {
+        model = new Model("New Seating Assignment");
+    }
+
     private void createRestrictions(Model model, List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
         for (Integer[] pair_forbidden : pairsForbidden) {
             int val_forbidden1 = pair_forbidden[0];
