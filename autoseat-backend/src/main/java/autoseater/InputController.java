@@ -128,7 +128,10 @@ public class InputController {
             System.out.println("Rows: " + mainApp.getCountRows());
             System.out.println("Cols: " + mainApp.getCountCols());
 
+            return ResponseEntity.ok("Row/Column count received!");
+
         }
-        return ResponseEntity.ok("Row/Column count received!");
+
+        return ResponseEntity.ok("Row/Column count NOT received!");
     }
 }

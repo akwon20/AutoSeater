@@ -169,15 +169,12 @@ const App = () => {
       }
 
       if (isIntegerString(rowInput) && isIntegerString(colInput)) {
-        setRowCount(rowInput);
-        setColCount(colInput);
-
-        console.log("Row Count: " + rowCount);
-        console.log("Column Count: " + colCount);
+        console.log("Row Input: " + rowInput);
+        console.log("Column Input: " + colInput);
 
         const newRowColCountPost = {
-          rows: rowCount,
-          cols: colCount,
+          rows: rowInput,
+          cols: colInput,
         };
 
         await axios.post('http://localhost:8080/api/rowcolcountpost', newRowColCountPost)
