@@ -34,6 +34,23 @@ public class AutoseaterApplication {
         return "Hello World!";
     }
 
+    public List<String[]> assignSeats() {
+        List<String[]> seatNames = new ArrayList<String[]>();
+
+        seats = assigner.assignSeats(countRows, countCols, pairsForbidden_id, pairsAllowed_id);
+
+        for (int i = 0; i < countRows; i++) {
+            String seatCols[] = new String[5];
+
+            for (int j = 0; j < countCols; j++) {
+                seatCols[j] = getStudentNameById(students, seats[i][j].getValue());
+            }
+            seatNames.add(seatCols);
+        }
+
+        return seatNames;
+    }
+
     public void setCountRows(int count) {
         countRows = count;
     }
