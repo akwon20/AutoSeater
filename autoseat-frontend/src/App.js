@@ -159,7 +159,6 @@ const App = () => {
         await axios.post('http://localhost:8080/api/constraintspost', constraintspost)
           .then(response => {
             console.log('Success: ', response.data);
-            handleShowSaved();
           })
           .catch(error => {
             console.error('ERROR: ', error);
