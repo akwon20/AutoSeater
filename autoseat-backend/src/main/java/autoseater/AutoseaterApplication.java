@@ -34,9 +34,11 @@ public class AutoseaterApplication {
         return "Hello World!";
     }
 
-    public List<String[]> assignSeats() {
-        List<String[]> seatNames = new ArrayList<String[]>();
-        List<Student> studentOrder = new ArrayList<Student>();
+    public String[] assignSeats() {
+        // List<String[]> seatNames = new ArrayList<String[]>();
+        // List<Student> studentOrder = new ArrayList<Student>();
+
+        String seatOrder[] = new String[countRows * countCols];
 
         if (assigner.getModel() != null) {
             assigner.resetModel();
@@ -51,16 +53,20 @@ public class AutoseaterApplication {
 
             for (int j = 0; j < countCols; j++) {
                 int studentSeatId = seats[i][j].getValue();
+                System.out.println("Student seat ID: " + studentSeatId);
                 Student currentStudent = getStudentById(students, studentSeatId);
                 // seatCols[j] = getStudentNameById(students, seats[i][j].getValue());
                 seatCols[j] = getStudentNameById(students, studentSeatId);
+                // seatCols[j] = currentStudent.getName();
                 currentStudent.setSeatNum(seatIndex);
+                seatOrder[seatIndex] = seatCols[j];
                 seatIndex++;
             }
-            seatNames.add(seatCols);
+            // seatNames.add(seatCols);
         }
 
-        return seatNames;
+        return seatOrder;
+        // return seatNames;
     }
 
     public void setCountRows(int count) {

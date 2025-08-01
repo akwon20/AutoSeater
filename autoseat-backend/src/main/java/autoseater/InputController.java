@@ -35,12 +35,13 @@ public class InputController {
     }
 
     @GetMapping("/studentdataget")
-    public ResponseEntity<Map<String, List<Student>>> getStudentData() {
-        Map<String, List<Student>> response = new HashMap();
+    public List<Student> getStudentData() {
+        // Map<String, List<Student>> response = new HashMap();
 
-        response.put("students", mainApp.getStudents());
+        // response.put("students", mainApp.getStudents());
 
-        return ResponseEntity.ok(response);
+        // return ResponseEntity.ok(response);
+        return mainApp.getStudents();
     }
 
     @GetMapping("/studentnamesget")
@@ -62,7 +63,7 @@ public class InputController {
     }
 
     @GetMapping("/seatassignmentsget")
-    public List<String[]> getSeatingAssignments() {
+    public String[] getSeatingAssignments() {
         return mainApp.assignSeats();
     }
 

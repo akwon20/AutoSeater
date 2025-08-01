@@ -192,6 +192,15 @@ const App = () => {
         throw new Error('Row and column inputs must be integer values!');
       }
 
+      const seatingOrder = await axios.get('http://localhost:8080/api/seatassignmentsget')
+      .catch(error => {
+        console.error('ERROR: ', error);
+        setErrorMessage(error.message);
+        handleShow();
+      });
+
+      console.log("Seating order: ", seatingOrder);
+
       if (canvasRef.current) {
         canvasRef.current.generateChart();
       }
