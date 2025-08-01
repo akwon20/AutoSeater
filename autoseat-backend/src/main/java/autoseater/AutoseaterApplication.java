@@ -36,6 +36,7 @@ public class AutoseaterApplication {
 
     public List<String[]> assignSeats() {
         List<String[]> seatNames = new ArrayList<String[]>();
+        List<Student> studentOrder = new ArrayList<Student>();
 
         if (assigner.getModel() != null) {
             assigner.resetModel();
@@ -43,11 +44,18 @@ public class AutoseaterApplication {
 
         seats = assigner.assignSeats(countRows, countCols, pairsForbidden_id, pairsAllowed_id);
 
+        int seatIndex = 0;
+
         for (int i = 0; i < countRows; i++) {
             String seatCols[] = new String[countCols];
 
             for (int j = 0; j < countCols; j++) {
-                seatCols[j] = getStudentNameById(students, seats[i][j].getValue());
+                int studentSeatId = seats[i][j].getValue();
+                Student currentStudent = getStudentById(students, studentSeatId);
+                // seatCols[j] = getStudentNameById(students, seats[i][j].getValue());
+                seatCols[j] = getStudentNameById(students, studentSeatId);
+                currentStudent.setSeatNum(seatIndex);
+                seatIndex++;
             }
             seatNames.add(seatCols);
         }
@@ -106,6 +114,26 @@ public class AutoseaterApplication {
 
     public List<Student> getStudents() {
         return students;
+    }
+
+    public static Student getStudentById(List<Student> studentList, int id) {
+        for (Student student : studentList) {
+            if (student.getIdNum() == id) {
+                return student;
+            }
+        }
+
+        return null;
+    }
+
+    public static Student getStudentByName(List<Student> studentList, String name) {
+        for (Student student : studentList) {
+            if (student.getName().equals(name)) {
+                return student;
+            }
+        }
+
+        return null;
     }
 
     public static Integer getStudentIdByName(List<Student> studentList, String name) {
