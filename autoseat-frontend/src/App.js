@@ -180,6 +180,8 @@ const App = () => {
         await axios.post('http://localhost:8080/api/rowcolcountpost', newRowColCountPost)
         .then(response => {
           console.log('Success: ', response.data);
+          setRowCount(rowInput);
+          setColCount(colInput);
         })
         .catch(error => {
             console.error('ERROR: ', error);
@@ -244,7 +246,7 @@ const App = () => {
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
 
       <ToastContainer className="p-3" position="bottom-start">
-        <Toast show={showSaved} onClose={handleCloseSaved}>
+        <Toast show={showSaved} onClose={handleCloseSaved} delay={5000} autohide>
           <Toast.Header>
             Alert
           </Toast.Header>
