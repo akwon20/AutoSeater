@@ -1,7 +1,7 @@
 package autoseater;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.chocosolver.solver.variables.IntVar;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AutoseaterApplication {
+
+    private Assigner assigner;
+
     private int countRows, countCols;
     private IntVar[][] seats;
     private List<Student> students;
@@ -17,6 +20,7 @@ public class AutoseaterApplication {
     private List<Integer[]> pairsAllowed_id;
 
     public AutoseaterApplication() {
+        assigner = new Assigner();
         countRows = 0;
         countCols = 0;
         seats = null;
