@@ -61,6 +61,11 @@ public class InputController {
         return mainApp.getConstraints();
     }
 
+    @GetMapping("/seatassignmentsget")
+    public List<String[]> getSeatingAssignments() {
+        return mainApp.assignSeats();
+    }
+
     @PostMapping("/studentdatapost")
     public ResponseEntity<String> updateStudentData(@RequestBody Map<String, String> studentList) {
         String listValue = "";
