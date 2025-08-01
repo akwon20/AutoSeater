@@ -53,13 +53,6 @@ public class InputController {
             names.add(students.get(i).getName());
         }
 
-        // nameArr = names.toArray(new String[0]);
-
-        // for (int j = 0; j < nameArr.length; j++) {
-        //     System.out.println(nameArr[j]);
-        // }
-
-        // return ResponseEntity.ok(names);
         return names;
     }
 
@@ -99,9 +92,6 @@ public class InputController {
             mainApp.resetRules();
         }
 
-        // String[] newConstraints = ["Test", "Test 2"];
-
-        // return ResponseEntity.ok("Constraints received! \n" + newConstraints);
         for (int i = 0; i < constraintList.size(); i++) {
             String name1 = constraintList.get(i)[0];
             String condition = constraintList.get(i)[1];
