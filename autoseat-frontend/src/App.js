@@ -20,7 +20,7 @@ import './components/SeatingChartContainer.css';
 
 const App = () => {
   const [show, setShow] = useState(false);
-  const [showGenerating, setShowGenerating] = useState(true);
+  const [showGenerating, setShowGenerating] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const [showChart, setShowChart] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -201,16 +201,23 @@ const App = () => {
         throw new Error('Row and column inputs must be integer values!');
       }
 
-      const seatAssignOutput = await axios.get('http://localhost:8080/api/seatassignmentsget')
+      setShowGenerating(true);
+      await axios.get('http://localhost:8080/api/seatassignmentsget')
+      .then(response => {
+        setShowGenerating(false);
+        console.log('Success: ', response.data);
+        seatingAssignments = response.data;
+        console.log("Seating order: ", seatingAssignments);
+        // console.log(seatAssignOutput.data);
+        handleRender();
+      })
       .catch(error => {
+        // setErrorMessage(error.message);
+        // handleShow();
         console.error('ERROR: ', error);
-        setErrorMessage(error.message);
-        handleShow();
-      });
-
-      seatingAssignments = seatAssignOutput.data;
+        throw new Error('Seating assignment retrieval failed! Please try again.')
+      })
       // setSeatingAssignments(seatAssignOutput.data);
-      console.log("Seating order: ", seatingAssignments);
 
       // setShowChart(true);
 
@@ -220,8 +227,6 @@ const App = () => {
       // else {
       //   throw new Error('Invalid Canvas reference! Please check and fix the bug.')
       // }
-
-      handleRender();
 
     } catch (error) {
       console.log(error.message);

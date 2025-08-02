@@ -64,7 +64,22 @@ public class InputController {
 
     @GetMapping("/seatassignmentsget")
     public String[][] getSeatingAssignments() {
-        return mainApp.assignSeats();
+        Map<String, String[][]> response = new HashMap();
+        String seats[][]  = mainApp.assignSeats();
+        // System.out.println(seats);
+
+        for (int i = 0; i < mainApp.getCountRows(); i++) {
+            for (int j = 0; j < mainApp.getCountCols(); j++) {
+                System.out.print(seats[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        response.put("seats", seats);
+
+        return seats;
+
+        // return ResponseEntity.ok(response);
     }
 
     @PostMapping("/studentdatapost")

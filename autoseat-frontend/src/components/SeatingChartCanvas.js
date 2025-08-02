@@ -11,6 +11,7 @@ const SeatingChartCanvas = ({ref, width, height, rowCount, colCount, seatAssignm
 
     const renderChart = () => {
         console.log("renderChart() called!");
+        console.log("Current seating assignments: ", seatAssignments);
         return renderRows();
     };
 
