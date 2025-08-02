@@ -5,7 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 
 import './SeatingChartContainer.css';
 
-const SeatingChartCanvas = ({ref, width, height, rowCount, colCount}) => {
+const SeatingChartCanvas = ({ref, width, height, rowCount, colCount, seatAssignments}) => {
     const chartWidth = width;
     const chartHeight = height;
 
@@ -18,6 +18,10 @@ const SeatingChartCanvas = ({ref, width, height, rowCount, colCount}) => {
         let rows = [];
 
         for (let row = 0; row < rowCount; row++) {
+            if (row >= 0 && row < rowCount) {
+                console.log("Row index within bounds! ", row);
+                console.log(seatAssignments[row]);
+            }
             rows.push(
                 <Row className="flex-nowrap">
                     {renderCols(row)}
@@ -41,7 +45,9 @@ const SeatingChartCanvas = ({ref, width, height, rowCount, colCount}) => {
                     alignContent: 'center'
                     }}
                     md={2}>
-                    Row {row} Col {col}
+                    {/* Row {row} Col {col} */}
+                    {/* {seatOrder[seatIndex]} */}
+                    {seatAssignments[row][col]}
                 </Col>
             );
         }

@@ -63,7 +63,7 @@ public class InputController {
     }
 
     @GetMapping("/seatassignmentsget")
-    public String[] getSeatingAssignments() {
+    public String[][] getSeatingAssignments() {
         return mainApp.assignSeats();
     }
 

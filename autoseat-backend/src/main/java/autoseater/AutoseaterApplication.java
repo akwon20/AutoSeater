@@ -34,9 +34,10 @@ public class AutoseaterApplication {
         return "Hello World!";
     }
 
-    public String[] assignSeats() {
+    public String[][] assignSeats() {
         // List<String[]> seatNames = new ArrayList<String[]>();
         // List<Student> studentOrder = new ArrayList<Student>();
+        String[][] seatNames = new String[countRows][countCols];
 
         String seatOrder[] = new String[countRows * countCols];
 
@@ -63,10 +64,11 @@ public class AutoseaterApplication {
                 seatIndex++;
             }
             // seatNames.add(seatCols);
+            seatNames[i] = seatCols;
         }
 
-        return seatOrder;
-        // return seatNames;
+        // return seatOrder;
+        return seatNames;
     }
 
     public void setCountRows(int count) {

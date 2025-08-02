@@ -10,6 +10,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import axios from 'axios';
 
+import GeneratingAlert from './components/GeneratingAlert.js';
 import CustomErrorModal from './components/CustomErrorModal.js';
 import SeatingChartCanvas from './components/SeatingChartCanvas.js';
 import TabStudCon from './components/TabStudCon.js';
@@ -19,7 +20,9 @@ import './components/SeatingChartContainer.css';
 
 const App = () => {
   const [show, setShow] = useState(false);
+  const [showGenerating, setShowGenerating] = useState(true);
   const [showSaved, setShowSaved] = useState(false);
+  const [showChart, setShowChart] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const canvasWidth = "450px";
@@ -34,6 +37,9 @@ const App = () => {
   const [studentNames, setStudentNames] = useState([]);
 
   const [constraintList, setConstraintList] = useState([]);
+  // const [seatingAssignments, setSeatingAssignments] = useState([]);
+
+  let seatingAssignments = [];
 
   useEffect(() => {
     console.log("Current constraints: ", constraintList);
@@ -44,6 +50,9 @@ const App = () => {
 
   const handleCloseSaved = () => setShowSaved(false);
   const handleShowSaved = () => setShowSaved(true);
+
+  const handleCloseGenerating = () => setShowGenerating(false);
+  const handleShowGenerating = () => setShowGenerating(true);
 
   const isIntegerString = (str) => {
     return /^-?\d+$/.test(str);
@@ -192,16 +201,41 @@ const App = () => {
         throw new Error('Row and column inputs must be integer values!');
       }
 
-      const seatingOrder = await axios.get('http://localhost:8080/api/seatassignmentsget')
+      const seatAssignOutput = await axios.get('http://localhost:8080/api/seatassignmentsget')
       .catch(error => {
         console.error('ERROR: ', error);
         setErrorMessage(error.message);
         handleShow();
       });
 
-      console.log("Seating order: ", seatingOrder);
+      seatingAssignments = seatAssignOutput.data;
+      // setSeatingAssignments(seatAssignOutput.data);
+      console.log("Seating order: ", seatingAssignments);
 
-      if (canvasRef.current) {
+      // setShowChart(true);
+
+      // if (canvasRef.current) {
+      //   canvasRef.current.generateChart();
+      // }
+      // else {
+      //   throw new Error('Invalid Canvas reference! Please check and fix the bug.')
+      // }
+
+      handleRender();
+
+    } catch (error) {
+      console.log(error.message);
+      setErrorMessage(error.message);
+      handleShow();
+    }
+
+  };
+
+  const handleRender = () => {
+    console.log("handleRender() called!");
+    console.log(seatingAssignments);
+    try {
+      if ((canvasRef.current)) {
         canvasRef.current.generateChart();
       }
       else {
@@ -212,8 +246,7 @@ const App = () => {
       setErrorMessage(error.message);
       handleShow();
     }
-
-  };
+  }
 
   return (
     <div className="App">
@@ -223,12 +256,13 @@ const App = () => {
         <Row>
           <Col xs={4}>
             <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
-            constraintAddHandler={handleConstraintAdd} constraintRemoveHandler={handleConstraintRemove} constraintUpdateHandler={handleConstraintUpdate}
-            data={studentNames} />
+              constraintAddHandler={handleConstraintAdd} constraintRemoveHandler={handleConstraintRemove}
+              constraintUpdateHandler={handleConstraintUpdate} data={studentNames} />
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">
-              <SeatingChartCanvas ref={canvasRef} rowCount={rowCount} colCount={colCount} width={canvasWidth} height={canvasHeight} />
+              {seatingAssignments.length > 0 ? (<SeatingChartCanvas show={showChart} ref={canvasRef} rowCount={rowCount} colCount={colCount}
+                width={canvasWidth} height={canvasHeight} seatingAssignments={seatingAssignments} />) : (<></>)}
             </div>
           </Col>
         </Row>
@@ -239,9 +273,11 @@ const App = () => {
           <Col xs={2} style={{ marginLeft: '80px' }}>
             <InputGroup>
               <InputGroup.Text>Rows</InputGroup.Text>
-              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }} onChange={handleChangeRowInput} />
+              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }}
+                onChange={handleChangeRowInput} />
               <InputGroup.Text>Cols</InputGroup.Text>
-              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }} onChange={handleChangeColInput} />
+              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }}
+                onChange={handleChangeColInput} />
             </InputGroup>
           </Col>
           <Col>
@@ -251,6 +287,7 @@ const App = () => {
         </Row>
       </Container>
 
+      <GeneratingAlert show={showGenerating} onHide={handleCloseGenerating} />
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
 
       <ToastContainer className="p-3" position="bottom-start">
