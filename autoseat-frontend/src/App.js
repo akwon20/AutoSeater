@@ -216,7 +216,7 @@ const App = () => {
         // handleShow();
         console.error('ERROR: ', error);
         throw new Error('Seating assignment retrieval failed! Please try again.')
-      })
+      });
       // setSeatingAssignments(seatAssignOutput.data);
 
       // setShowChart(true);
@@ -239,17 +239,19 @@ const App = () => {
   const handleRender = () => {
     console.log("handleRender() called!");
     console.log(seatingAssignments);
-    try {
-      if ((canvasRef.current)) {
-        canvasRef.current.generateChart();
+    if (seatingAssignments.length > 0) {
+      try {
+        if ((canvasRef.current)) {
+          canvasRef.current.generateChart();
+        }
+        else {
+          throw new Error('Invalid Canvas reference! Please check and fix the bug.')
+        }
+      } catch (error) {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        handleShow();
       }
-      else {
-        throw new Error('Invalid Canvas reference! Please check and fix the bug.')
-      }
-    } catch (error) {
-      console.log(error.message);
-      setErrorMessage(error.message);
-      handleShow();
     }
   }
 
@@ -266,8 +268,8 @@ const App = () => {
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">
-              {seatingAssignments.length > 0 ? (<SeatingChartCanvas show={showChart} ref={canvasRef} rowCount={rowCount} colCount={colCount}
-                width={canvasWidth} height={canvasHeight} seatingAssignments={seatingAssignments} />) : (<></>)}
+              <SeatingChartCanvas show={showChart} ref={canvasRef} rowCount={rowCount} colCount={colCount}
+                width={canvasWidth} height={canvasHeight} seatingAssignments={seatingAssignments} />
             </div>
           </Col>
         </Row>
