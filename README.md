@@ -22,10 +22,10 @@ and effort required to other tasks teachers deal with.
 3. Right-click the "AutoSeater-backendonly" folder in the path bar below and select "Open in Terminal"
 
 4. Type the following command in the terminal (use ls to display the current directory contents):
-`cd autoseat-backend
-`
-5. Type the following command:
-`./gradlew clean build shadowJar
-`
+  `cd autoseat-backend`
+
+6. Type the following command:
+  `./gradlew clean build shadowJar`
+
 7. Once the build is complete, type the following command:
-> java -jar app/build/libs/autoseater.jar
+   `java -jar app/build/libs/autoseater.jar`
