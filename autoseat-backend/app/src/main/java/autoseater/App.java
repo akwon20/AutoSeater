@@ -173,11 +173,13 @@ public class App {
         scanner.close();
         seats = assigner.assignSeats(countRows, countCols, pairsForbidden_id, pairsAllowed_id);
 
-        for (int i = 0; i < countRows; i++) {
-            for (int j = 0; j < countCols; j++) {
-                System.out.print(getStudentNameById(students, seats[i][j].getValue()) + "\t");
+        if (seats != null) {
+            for (int i = 0; i < countRows; i++) {
+                for (int j = 0; j < countCols; j++) {
+                    System.out.print(getStudentNameById(students, seats[i][j].getValue()) + "\t");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 }
