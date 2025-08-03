@@ -139,13 +139,13 @@ public class App {
             return;
         }
 
-        System.out.println("Enter the number of constraints: ");
+        System.out.println("Enter the number of restrictions: ");
         countConst = setCount();
 
-        System.out.println("Enter the adjacent seatings: ");
+        System.out.println("Enter the number of adjacent seatings: ");
         countAdj = setCount();
 
-        System.out.println("Number of constraints: " + countConst);
+        System.out.println("Number of restrictions: " + countConst);
         System.out.println("Number of adjacent seatings: " + countAdj);
 
         for (int j = 0; j < students.size(); j++) {
@@ -158,7 +158,7 @@ public class App {
             int forbidden_val1 = forbidden_pair[0];
             int forbidden_val2 = forbidden_pair[1];
 
-            System.out.println("Constraint: {" + getStudentNameById(students, forbidden_val1) + ", " + getStudentNameById(students, forbidden_val2) + "}");
+            System.out.println("Restriction: {" + getStudentNameById(students, forbidden_val1) + ", " + getStudentNameById(students, forbidden_val2) + "}");
         }
 
         pairsAllowed_id = setSeatingPairs(students, countAdj);

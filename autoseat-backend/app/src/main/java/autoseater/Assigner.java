@@ -25,7 +25,7 @@ public class Assigner {
 
             for (int r = 0; r < rows; r++) {
                 for (int k = 0; k < cols; k++) {
-                    // System.out.println("Current index: " + r + ", " + k);
+                    System.out.println("Current index: " + r + ", " + k);
                     if (r > 0) { // Up
                         // System.out.println("Up");
                         model.or(
