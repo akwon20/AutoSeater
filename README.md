@@ -29,24 +29,24 @@ and effort required to other tasks teachers deal with.
 
 4. Input the following command in the terminal (type "ls" to display the current directory contents):
 
-`cd autoseat-backend`
+    `cd autoseat-backend`
 
 5. Input the following command in the terminal to build:
 
-`./gradlew clean build`
+    `./gradlew clean build`
 
 6. Input the following command in the terminal to run Spring Boot (required for API calls):
 
-`./gradlew bootRun`
+    `./gradlew bootRun`
 
 7. Open another terminal via step 3
 
 8. Input the following command:
 
-`cd autoseat-frontend'
+    `cd autoseat-frontend`
 
 9. Input the following commands:
 
-`sudo npm install`
+    `sudo npm install`
 
-`sudo npm start`
+    `sudo npm start`
