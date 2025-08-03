@@ -4,6 +4,9 @@ Users can input a specific list of student names along with their desired restri
 and adjacencies (who must sit next to whom) to automatically generate a seating chart and reallocate the amount of time
 and effort required to other tasks teachers deal with.
 
+## Known Issues
+
+
 ### Tools Used
 - Java 21.0.4
 - Gradle 8.0.2
