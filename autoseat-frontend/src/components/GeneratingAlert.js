@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 
-const GeneratingAlert = ({show, onHide}) => {
+const GeneratingAlert = ({show, onHide, message}) => {
     return (
         <Modal show={show} onHide={onHide} centered >
             <Modal.Header closeButton>
@@ -14,7 +14,7 @@ const GeneratingAlert = ({show, onHide}) => {
             <Spinner animation="border" role="status" style={{
                 marginRight: "20px",
             }} />
-                Please wait... Click "X" to cancel.
+                {message}
             </Modal.Body>
         </Modal>
     );

@@ -24,6 +24,7 @@ const App = () => {
   const [showSaved, setShowSaved] = useState(false);
   const [showChart, setShowChart] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [generatingMessage, setGeneratingMessage] = useState('');
 
   const canvasWidth = "450px";
   const canvasHeight = "595px";
@@ -157,25 +158,28 @@ const App = () => {
         throw new Error('No students available.' + '\n' + 'Make sure to click "Save Students" after inputting the student list.');
       }
 
+      setShowGenerating(true);
       if (constraintList.length > 0) {
+        setGeneratingMessage("Sending constraints...");
         for (let i = 0; i < constraintList.length; i++) {
           console.log("Current constraint: ", constraintList[i].constraint);
           constraintspost.push(constraintList[i].constraint);
         }
 
         console.log("Constraint list to be sent: ", constraintspost);
-
         await axios.post('http://localhost:8080/api/constraintspost', constraintspost)
           .then(response => {
             console.log('Success: ', response.data);
           })
           .catch(error => {
             console.error('ERROR: ', error);
-            setErrorMessage(error.message);
-            handleShow();
+            // setErrorMessage(error.message);
+            // handleShow();
+            throw new Error('Failed to send constraints! Please try again.');
           });
       }
 
+      setGeneratingMessage("Sending row and column inputs...");
       if (isIntegerString(rowInput) && isIntegerString(colInput)) {
         console.log("Row Input: " + rowInput);
         console.log("Column Input: " + colInput);
@@ -193,15 +197,16 @@ const App = () => {
         })
         .catch(error => {
             console.error('ERROR: ', error);
-            setErrorMessage(error.message);
-            handleShow();
+            // setErrorMessage(error.message);
+            // handleShow();
+            throw new Error('Failed to send row and column inputs! Please try again.');
           });
       }
       else {
         throw new Error('Row and column inputs must be integer values!');
       }
 
-      setShowGenerating(true);
+      setGeneratingMessage("Generating seating assignments...");
       await axios.get('http://localhost:8080/api/seatassignmentsget')
       .then(response => {
         setShowGenerating(false);
@@ -215,7 +220,7 @@ const App = () => {
         // setErrorMessage(error.message);
         // handleShow();
         console.error('ERROR: ', error);
-        throw new Error('Seating assignment retrieval failed! Please try again.')
+        throw new Error('Seating assignment retrieval failed! Please check your constraints and try again.')
       });
       // setSeatingAssignments(seatAssignOutput.data);
 
@@ -294,7 +299,7 @@ const App = () => {
         </Row>
       </Container>
 
-      <GeneratingAlert show={showGenerating} onHide={handleCloseGenerating} />
+      <GeneratingAlert show={showGenerating} onHide={handleCloseGenerating} message={generatingMessage} />
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
 
       <ToastContainer className="p-3" position="bottom-start">
