@@ -68,40 +68,44 @@ const App = () => {
   };
 
   const handleStudentSave = async (e) => {
-    e.preventDefault();
-    console.log("Save Students clicked!");
-    console.log("Current list: ", studentList);
+    try {
+      e.preventDefault();
+      console.log("Save Students clicked!");
+      console.log("Current list: ", studentList);
 
-    if (studentList.length > 0) {
-      const newPost = {
-        studentList
-      };
+      if (studentList.length > 0) {
+        const newPost = {
+          studentList
+        };
 
-      await axios.post('http://localhost:8080/api/studentdatapost', newPost)
-            .then(response => {
-              console.log('Success: ', response.data);
-              handleShowSaved();
-            })
-            .catch(error => {
-              console.error('ERROR: ', error);
-              setErrorMessage(error.message);
-              handleShow();
-            });
+        await axios.post('http://localhost:8080/api/studentdatapost', newPost)
+              .then(response => {
+                console.log('Success: ', response.data);
+                handleShowSaved();
+              })
+              .catch(error => {
+                console.error('ERROR: ', error);
+                throw new Error('Failed to save student list! Please try again.')
+              });
+      }
+      else {
+        throw new Error('No input made.' + '\n' +  'Please input a list of students.');
+      }
+
+      await axios.get('http://localhost:8080/api/studentnamesget')
+        .then(response => {
+          console.log('Success: ', response.data);
+          setStudentNames(response.data);
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error ('Failed to retrieve student list! Please try again.');
+        });
+    } catch (error) {
+      console.error('ERROR: ', error);
+      setErrorMessage(error.message);
+      handleShow();
     }
-    else {
-      throw new Error('No input made.' + '\n' +  'Please input a list of students.');
-    }
-
-    await axios.get('http://localhost:8080/api/studentnamesget')
-      .then(response => {
-        console.log('Success: ', response.data);
-        setStudentNames(response.data);
-      })
-      .catch(error => {
-              console.error('ERROR: ', error);
-              setErrorMessage(error.message);
-              handleShow();
-      });
   };
 
   const handleConstraintAdd = (newId) => {
@@ -233,7 +237,7 @@ const App = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
+            <TabStudCon value={studentList} studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
               constraintAddHandler={handleConstraintAdd} constraintRemoveHandler={handleConstraintRemove}
               constraintUpdateHandler={handleConstraintUpdate} data={studentNames} />
           </Col>

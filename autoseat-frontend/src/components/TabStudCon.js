@@ -10,6 +10,7 @@ import './Tab.css';
 import './TextArea.css';
 
 const TabStudCon = (props) => {
+    const value = props.value;
     const data = props.data;
 
     const studentListChangeHandler = props.studentListChangeHandler;
@@ -57,6 +58,7 @@ const TabStudCon = (props) => {
                         rows={16}
                         style={{ display: "flex", maxHeight: "405px" }}
                         placeholder='Enter student names (one per line)'
+                        value={value}
                         onChange={studentListChangeHandler}/>
                     <Button variant="primary" size="lg" onClick={studentDataSaveHandler}>Save Students</Button>
                     Don't forget to click save!
