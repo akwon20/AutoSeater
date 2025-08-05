@@ -36,11 +36,6 @@ public class InputController {
 
     @GetMapping("/studentdataget")
     public List<Student> getStudentData() {
-        // Map<String, List<Student>> response = new HashMap();
-
-        // response.put("students", mainApp.getStudents());
-
-        // return ResponseEntity.ok(response);
         return mainApp.getStudents();
     }
 
@@ -66,7 +61,6 @@ public class InputController {
     public String[][] getSeatingAssignments() {
         Map<String, String[][]> response = new HashMap();
         String seats[][]  = mainApp.assignSeats();
-        // System.out.println(seats);
 
         for (int i = 0; i < mainApp.getCountRows(); i++) {
             for (int j = 0; j < mainApp.getCountCols(); j++) {
@@ -79,7 +73,6 @@ public class InputController {
 
         return seats;
 
-        // return ResponseEntity.ok(response);
     }
 
     @PostMapping("/studentdatapost")
