@@ -80,13 +80,14 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
     return (
         <div width={chartWidth} height={chartHeight}>
             {
-                hasSeats ?(
+                hasSeats ? (
                 <Container>
                     {
                         renderChart()
                     }
-                </Container>
-            ) : (<Container></Container>)}
+                </Container>) : (
+                <Container></Container>
+            )}
         </div>
     );
 });

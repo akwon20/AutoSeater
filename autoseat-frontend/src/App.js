@@ -34,9 +34,9 @@ const App = () => {
   const [colInput, setColInput] = useState();
   const [rowCount, setRowCount] = useState();
   const [colCount, setColCount] = useState();
+
   const [studentList, setStudentList] = useState("");
   const [studentNames, setStudentNames] = useState([]);
-
   const [constraintList, setConstraintList] = useState([]);
 
   let seatingAssignments = [];
@@ -47,12 +47,9 @@ const App = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const handleCloseSaved = () => setShowSaved(false);
   const handleShowSaved = () => setShowSaved(true);
-
   const handleCloseGenerating = () => setShowGenerating(false);
-  const handleShowGenerating = () => setShowGenerating(true);
 
   const isIntegerString = (str) => {
     return /^-?\d+$/.test(str);
