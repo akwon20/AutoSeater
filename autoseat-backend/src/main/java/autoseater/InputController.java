@@ -136,6 +136,6 @@ public class InputController {
 
         }
 
-        return ResponseEntity.ok("Row/Column count NOT received!");
+        return ResponseEntity.badRequest().body("Row/Column count NOT received!");
     }
 }
