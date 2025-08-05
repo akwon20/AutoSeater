@@ -212,9 +212,9 @@ const App = () => {
         setShowGenerating(false);
         console.log('Success: ', response.data);
         seatingAssignments = response.data;
-        console.log("Seating order: ", seatingAssignments);
+        // setSeatingAssignments(response.data);
         // console.log(seatAssignOutput.data);
-        handleRender();
+        // handleRender();
       })
       .catch(error => {
         // setErrorMessage(error.message);
@@ -224,21 +224,21 @@ const App = () => {
       });
       // setSeatingAssignments(seatAssignOutput.data);
 
-      // setShowChart(true);
-
-      // if (canvasRef.current) {
-      //   canvasRef.current.generateChart();
-      // }
-      // else {
-      //   throw new Error('Invalid Canvas reference! Please check and fix the bug.')
-      // }
+      console.log("Seating order: ", seatingAssignments);
+      setShowChart(true);
+      if (canvasRef.current) {
+        canvasRef.current.generateChart(seatingAssignments);
+      }
+      else {
+        throw new Error('Invalid Canvas reference! Please check and fix the bug.')
+      }
 
     } catch (error) {
+      setShowGenerating(false);
       console.log(error.message);
       setErrorMessage(error.message);
       handleShow();
     }
-
   };
 
   const handleRender = () => {
@@ -247,7 +247,8 @@ const App = () => {
     if (seatingAssignments.length > 0) {
       try {
         if ((canvasRef.current)) {
-          canvasRef.current.generateChart();
+          setShowChart(true);
+          canvasRef.current.generateChart(seatingAssignments);
         }
         else {
           throw new Error('Invalid Canvas reference! Please check and fix the bug.')
@@ -273,8 +274,8 @@ const App = () => {
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">
-              <SeatingChartCanvas show={showChart} ref={canvasRef} rowCount={rowCount} colCount={colCount}
-                width={canvasWidth} height={canvasHeight} seatingAssignments={seatingAssignments} />
+              <SeatingChartCanvas ref={canvasRef} show={showChart} rowCount={rowCount} colCount={colCount}
+                width={canvasWidth} height={canvasHeight} />
             </div>
           </Col>
         </Row>
