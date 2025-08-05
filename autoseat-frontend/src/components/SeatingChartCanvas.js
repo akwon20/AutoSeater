@@ -1,4 +1,4 @@
-import { useImperativeHandle, forwardRef } from 'react';
+import { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from 'react-bootstrap';
 
@@ -11,7 +11,28 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
     const rowCount = props.rowCount;
     const colCount = props.colCount;
 
-    const renderChart = (seats) => {
+    const [seats, setSeats] = useState();
+    const hasSeats = seats && (seats.length > 0);
+
+    useEffect(() => {
+        console.log("Current seats: ", seats);
+        console.log("Has seats?: ", hasSeats);
+    });
+
+    useImperativeHandle(ref, () => ({
+        // return {
+        //     generateChart: renderChart
+        // }
+        generateChart: (seats) => {
+            // renderChart(seats);
+            if (seats !== undefined) {
+                console.log("Setting seats...");
+                setSeats(seats);
+            }
+        }
+    }));
+
+    const renderChart = () => {
         console.log("renderChart() called!");
         if (seats !== undefined) {
             console.log("Seats found!");
@@ -21,10 +42,10 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
             console.log("No seats found!");
         }
 
-        return renderRows(seats);
+        return renderRows();
     };
 
-    const renderRows = (seats) => {
+    const renderRows = () => {
         let rows = [];
 
         for (let row = 0; row < rowCount; row++) {
@@ -33,7 +54,7 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
             // }
             rows.push(
                 <Row className="flex-nowrap">
-                    {renderCols(row, seats)}
+                    {renderCols(row)}
                 </Row>
             );
         }
@@ -41,7 +62,7 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
         return rows;
     };
 
-    const renderCols = (row, seats) => {
+    const renderCols = (row) => {
         let cols = [];
 
         for (let col = 0; col < colCount; col++) {
@@ -54,9 +75,9 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
                     alignContent: 'center'
                     }}
                     md={2}>
-                    Row {row} Col {col}
+                    {/* Row {row} Col {col} */}
                     {/* {seatOrder[seatIndex]} */}
-                    {/* {seats[row][col]} */}
+                    {seats[row][col]}
                 </Col>
             );
         }
@@ -64,23 +85,16 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
         return cols;
     }
 
-
-    useImperativeHandle(ref, () => ({
-        // return {
-        //     generateChart: renderChart
-        // }
-        generateChart: (seats) => {
-            renderChart(seats);
-        }
-    }));
-
     return (
         <div width={chartWidth} height={chartHeight}>
-            <Container>
-                {
-                    renderChart()
-                }
-            </Container>
+            {
+                hasSeats ?(
+                <Container>
+                    {
+                        renderChart()
+                    }
+                </Container>
+            ) : (<Container></Container>)}
         </div>
     );
 });

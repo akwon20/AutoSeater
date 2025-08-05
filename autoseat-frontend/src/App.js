@@ -227,7 +227,7 @@ const App = () => {
       console.log("Seating order: ", seatingAssignments);
       setShowChart(true);
       if (canvasRef.current) {
-        canvasRef.current.generateChart(seatingAssignments);
+        canvasRef.current?.generateChart(seatingAssignments);
       }
       else {
         throw new Error('Invalid Canvas reference! Please check and fix the bug.')
@@ -248,7 +248,7 @@ const App = () => {
       try {
         if ((canvasRef.current)) {
           setShowChart(true);
-          canvasRef.current.generateChart(seatingAssignments);
+          canvasRef.current?.generateChart(seatingAssignments);
         }
         else {
           throw new Error('Invalid Canvas reference! Please check and fix the bug.')
