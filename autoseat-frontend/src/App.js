@@ -145,6 +145,71 @@ const App = () => {
     );
   }
 
+
+  const handleReset = async () => {
+    try {
+      console.log("Reset button clicked!");
+      setRowInput("");
+      setColInput("");
+      // setRowCount();
+      // setColCount();
+
+      setStudentList("");
+      setStudentNames([]);
+      setConstraintList([]);
+
+      const studentResetPost = {
+        studentList
+      };
+
+
+      await axios.post('http://localhost:8080/api/studentdatapost', studentResetPost)
+        .then(response => {
+          console.log('Success: ', response.data);
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error('Failed to reset student list! Please try again.')
+        });
+
+      await axios.get('http://localhost:8080/api/studentnamesget')
+        .then(response => {
+          console.log('Success: ', response.data);
+          setStudentNames(response.data);
+          console.log("Student names successfully reset");
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error ('Failed to retrieve student list! Please try again.');
+        });
+
+      const constraintsPost = [];
+
+      await axios.post('http://localhost:8080/api/constraintspost', constraintsPost)
+        .then(response => {
+          console.log('Success: ', response.data);
+          console.log("Constraints successfully reset");
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error('Failed to send constraints! Please try again.');
+        });
+
+      setShowChart(false);
+      if (canvasRef.current) {
+        canvasRef.current?.generateChart([]);
+      }
+      else {
+        throw new Error('Invalid Canvas reference! Please check and fix the bug.')
+      }
+
+    } catch (error) {
+      console.log(error.message);
+      setErrorMessage(error.message);
+      handleShow();
+    }
+  };
+
   const handleGenerate = async () => {
     console.log("Generate button clicked!");
     console.log("Row Count: " + rowInput);
@@ -187,14 +252,14 @@ const App = () => {
         };
 
         await axios.post('http://localhost:8080/api/rowcolcountpost', newRowColCountPost)
-        .then(response => {
-          console.log('Success: ', response.data);
-          setRowCount(rowInput);
-          setColCount(colInput);
-        })
-        .catch(error => {
-            console.error('ERROR: ', error);
-            throw new Error('Failed to send row and column inputs! Please try again.');
+          .then(response => {
+            console.log('Success: ', response.data);
+            setRowCount(rowInput);
+            setColCount(colInput);
+          })
+          .catch(error => {
+              console.error('ERROR: ', error);
+              throw new Error('Failed to send row and column inputs! Please try again.');
           });
       }
       else {
@@ -256,14 +321,14 @@ const App = () => {
             <InputGroup>
               <InputGroup.Text>Rows</InputGroup.Text>
               <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }}
-                onChange={handleChangeRowInput} />
+                value={rowInput} onChange={handleChangeRowInput} />
               <InputGroup.Text>Cols</InputGroup.Text>
               <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }}
-                onChange={handleChangeColInput} />
+                value={colInput} onChange={handleChangeColInput} />
             </InputGroup>
           </Col>
           <Col>
-            <Button variant="secondary" size="lg" style={{ marginRight: "8px" }}>Reset</Button>
+            <Button variant="secondary" size="lg" style={{ marginRight: "8px" }} onClick={handleReset}>Reset</Button>
             <Button variant="primary" size="lg" onClick={handleGenerate}>Generate</Button>
           </Col>
         </Row>
