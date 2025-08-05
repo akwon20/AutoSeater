@@ -60,11 +60,9 @@ public class Assigner {
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden1),
                                 model.arithm(seat[r][k-1], "!=", val_forbidden2)).post();
-                        if (rows > 1) {
-                            model.or(
-                                    model.arithm(seat[r][k], "!=", val_forbidden2),
-                                    model.arithm(seat[1][k-1], "!=", val_forbidden1)).post();
-                        }
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden2),
+                                model.arithm(seat[r][k-1], "!=", val_forbidden1)).post();
                     }
 
                     if (k < cols - 1) { // Right
@@ -72,11 +70,9 @@ public class Assigner {
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden1),
                                 model.arithm(seat[r][k+1], "!=", val_forbidden2)).post();
-                        if (rows > 1) {
-                            model.or(
-                                    model.arithm(seat[r][k], "!=", val_forbidden2),
-                                    model.arithm(seat[1][k+1], "!=", val_forbidden1)).post();
-                        }
+                        model.or(
+                                model.arithm(seat[r][k], "!=", val_forbidden2),
+                                model.arithm(seat[r][k+1], "!=", val_forbidden1)).post();
                     }
                 }
             }
