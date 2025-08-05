@@ -38,7 +38,6 @@ const App = () => {
   const [studentNames, setStudentNames] = useState([]);
 
   const [constraintList, setConstraintList] = useState([]);
-  // const [seatingAssignments, setSeatingAssignments] = useState([]);
 
   let seatingAssignments = [];
 
@@ -99,7 +98,6 @@ const App = () => {
     await axios.get('http://localhost:8080/api/studentnamesget')
       .then(response => {
         console.log('Success: ', response.data);
-        // handleStudentNamesChange(response.data);
         setStudentNames(response.data);
       })
       .catch(error => {
@@ -173,8 +171,6 @@ const App = () => {
           })
           .catch(error => {
             console.error('ERROR: ', error);
-            // setErrorMessage(error.message);
-            // handleShow();
             throw new Error('Failed to send constraints! Please try again.');
           });
       }
@@ -197,8 +193,6 @@ const App = () => {
         })
         .catch(error => {
             console.error('ERROR: ', error);
-            // setErrorMessage(error.message);
-            // handleShow();
             throw new Error('Failed to send row and column inputs! Please try again.');
           });
       }
@@ -212,17 +206,11 @@ const App = () => {
         setShowGenerating(false);
         console.log('Success: ', response.data);
         seatingAssignments = response.data;
-        // setSeatingAssignments(response.data);
-        // console.log(seatAssignOutput.data);
-        // handleRender();
       })
       .catch(error => {
-        // setErrorMessage(error.message);
-        // handleShow();
         console.error('ERROR: ', error);
         throw new Error('Seating assignment retrieval failed! Please check your constraints and try again.')
       });
-      // setSeatingAssignments(seatAssignOutput.data);
 
       console.log("Seating order: ", seatingAssignments);
       setShowChart(true);
@@ -240,26 +228,6 @@ const App = () => {
       handleShow();
     }
   };
-
-  const handleRender = () => {
-    console.log("handleRender() called!");
-    console.log(seatingAssignments);
-    if (seatingAssignments.length > 0) {
-      try {
-        if ((canvasRef.current)) {
-          setShowChart(true);
-          canvasRef.current?.generateChart(seatingAssignments);
-        }
-        else {
-          throw new Error('Invalid Canvas reference! Please check and fix the bug.')
-        }
-      } catch (error) {
-        console.log(error.message);
-        setErrorMessage(error.message);
-        handleShow();
-      }
-    }
-  }
 
   return (
     <div className="App">

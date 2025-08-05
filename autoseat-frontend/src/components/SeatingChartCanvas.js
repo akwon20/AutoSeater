@@ -2,7 +2,6 @@ import { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from 'react-bootstrap';
 
-
 import './SeatingChartContainer.css';
 
 const SeatingChartCanvas = forwardRef((props, ref) => {
@@ -20,11 +19,7 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
     });
 
     useImperativeHandle(ref, () => ({
-        // return {
-        //     generateChart: renderChart
-        // }
         generateChart: (seats) => {
-            // renderChart(seats);
             if (seats !== undefined) {
                 console.log("Setting seats...");
                 setSeats(seats);
@@ -49,9 +44,6 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
         let rows = [];
 
         for (let row = 0; row < rowCount; row++) {
-            // if (row >= 0 && row < rowCount) {
-            //     console.log("Row index within bounds! ", row);
-            // }
             rows.push(
                 <Row className="flex-nowrap">
                     {renderCols(row)}
