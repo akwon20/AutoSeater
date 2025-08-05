@@ -150,7 +150,7 @@ const App = () => {
     console.log("Row Count: " + rowInput);
     console.log("Column Count: " + colInput);
 
-    const constraintspost = [];
+    const constraintsPost = [];
 
     try {
       if (studentNames.length < 1) {
@@ -162,11 +162,11 @@ const App = () => {
         setGeneratingMessage("Sending constraints...");
         for (let i = 0; i < constraintList.length; i++) {
           console.log("Current constraint: ", constraintList[i].constraint);
-          constraintspost.push(constraintList[i].constraint);
+          constraintsPost.push(constraintList[i].constraint);
         }
 
-        console.log("Constraint list to be sent: ", constraintspost);
-        await axios.post('http://localhost:8080/api/constraintspost', constraintspost)
+        console.log("Constraint list to be sent: ", constraintsPost);
+        await axios.post('http://localhost:8080/api/constraintspost', constraintsPost)
           .then(response => {
             console.log('Success: ', response.data);
           })
