@@ -18,6 +18,14 @@ public class Assigner {
         model = new Model("Seating Assignment");
     }
 
+    public Model getModel() {
+        return model;
+    }
+
+    public void resetModel() {
+        model = new Model("New Seating Assignment");
+    }
+
     private void createRestrictions(Model model, List<Integer[]> pairsForbidden, int rows, int cols, IntVar[][] seat) {
         for (Integer[] pair_forbidden : pairsForbidden) {
             int val_forbidden1 = pair_forbidden[0];
@@ -54,7 +62,7 @@ public class Assigner {
                                 model.arithm(seat[r][k-1], "!=", val_forbidden2)).post();
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[1][k-1], "!=", val_forbidden1)).post();
+                                model.arithm(seat[r][k-1], "!=", val_forbidden1)).post();
                     }
 
                     if (k < cols - 1) { // Right
@@ -64,7 +72,7 @@ public class Assigner {
                                 model.arithm(seat[r][k+1], "!=", val_forbidden2)).post();
                         model.or(
                                 model.arithm(seat[r][k], "!=", val_forbidden2),
-                                model.arithm(seat[1][k+1], "!=", val_forbidden1)).post();
+                                model.arithm(seat[r][k+1], "!=", val_forbidden1)).post();
                     }
                 }
             }

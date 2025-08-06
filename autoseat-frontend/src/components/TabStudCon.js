@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useImperativeHandle, forwardRef } from 'react';
 
 import Button from 'react-bootstrap/button';
 import Tab from 'react-bootstrap/Tab';
@@ -9,42 +9,47 @@ import ConstraintRow from './ConstraintRow.js';
 import './Tab.css';
 import './TextArea.css';
 
-const TabStudCon = (props) => {
+const TabStudCon = forwardRef((props, ref) => {
+    const value = props.value;
     const data = props.data;
-    // const constraintRows = props.constraintRows;
-    // const addConstraintHandler = props.addConstraintHandler;
-    // const removeConstraintHandler = props.removeConstraintHandler;
+
+    const studentListChangeHandler = props.studentListChangeHandler;
+    const studentDataSaveHandler = props.saveStudentDataHandler;
+
+    const constraintAddHandler = props.constraintAddHandler;
+    const constraintRemoveHandler = props.constraintRemoveHandler;
+    const constraintUpdateHandler = props.constraintUpdateHandler;
 
     const [constraintRows, setConstraintRows] = useState([]);
 
-    const saveStudentList = () => {
-        console.log("Save Students clicked!");
-    }
+    useImperativeHandle(ref, () => ({
+        clearConstraints: resetConstraintRows
+    }));
 
     const addConstraintRow = () => {
+        const newId = Date.now();
+
         console.log("Add Constraint clicked!");
         const newConstraintRow = {
-            id: Date.now(),
+            id: newId,
             data: data,
         };
 
         setConstraintRows([...constraintRows, newConstraintRow]);
+        constraintAddHandler(newId);
     }
 
     const removeConstraintRow = (id) => {
         console.log("Remove button clicked!");
         console.log("Row to be removed: ", id);
-        // let newConstraintRows = [...constraintRows];
-        // newConstraintRows.splice(id, 1);
-        // setConstraintRows(newConstraintRows);
 
         setConstraintRows(constraintRows.filter((constraintRow) => {return constraintRow.id !== id}));
+        constraintRemoveHandler(id);
+    }
 
-        // setConstraintRows((prevState) => {
-        //     let newConstraintRows = [...prevState];
-        //     newConstraintRows.splice(id, 1);
-        //     return newConstraintRows;
-        // });
+    const resetConstraintRows = () => {
+        console.log("Resetting constraint rows...");
+        setConstraintRows([]);
     }
 
     return (
@@ -61,8 +66,10 @@ const TabStudCon = (props) => {
                         className='TextArea'
                         rows={16}
                         style={{ display: "flex", maxHeight: "405px" }}
-                        placeholder='Enter student names (one per line)'/>
-                    <Button variant="primary" size="lg" onClick={saveStudentList}>Save Students</Button>
+                        placeholder='Enter student names (one per line)'
+                        value={value}
+                        onChange={studentListChangeHandler}/>
+                    <Button variant="primary" size="lg" onClick={studentDataSaveHandler}>Save Students</Button>
                     Don't forget to click save!
                 </div>
             </Tab>
@@ -70,7 +77,7 @@ const TabStudCon = (props) => {
                 <div className="d-grid gap-2">
                     <div style={{ maxWidth: "450px", height: "398px", overflowY: "auto" }}>
                         {constraintRows.map((constraintRow) => (
-                            <ConstraintRow key={constraintRow.id} data={data} onClick={() => removeConstraintRow(constraintRow.id)}/>
+                            <ConstraintRow key={constraintRow.id} id={constraintRow.id} constraintChangeHandler={constraintUpdateHandler} data={data} onClick={() => removeConstraintRow(constraintRow.id)}/>
                         ))}
                     </div>
                     <Button variant="primary" size="lg" onClick={addConstraintRow}>Add Constraints</Button>
@@ -78,6 +85,6 @@ const TabStudCon = (props) => {
             </Tab>
         </Tabs>
     );
-};
+});
 
 export default TabStudCon;

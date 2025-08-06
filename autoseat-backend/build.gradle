@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'application'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+	// id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'autoseater.backend'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    testImplementation 'junit:junit:4.13.2'
+	implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.choco-solver:choco-solver:4.10.14'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+application {
+	mainClass = 'autoseater.AutoseaterApplication'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}

@@ -1,12 +1,16 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Button from 'react-bootstrap/button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import axios from 'axios';
 
+import GeneratingAlert from './components/GeneratingAlert.js';
 import CustomErrorModal from './components/CustomErrorModal.js';
 import SeatingChartCanvas from './components/SeatingChartCanvas.js';
 import TabStudCon from './components/TabStudCon.js';
@@ -16,21 +20,39 @@ import './components/SeatingChartContainer.css';
 
 const App = () => {
   const [show, setShow] = useState(false);
+  const [showGenerating, setShowGenerating] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [showChart, setShowChart] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [generatingMessage, setGeneratingMessage] = useState('');
 
   const canvasWidth = "450px";
   const canvasHeight = "595px";
   const canvasRef = useRef();
+  const tabRef = useRef();
 
   const [rowInput, setRowInput] = useState();
   const [colInput, setColInput] = useState();
   const [rowCount, setRowCount] = useState();
   const [colCount, setColCount] = useState();
 
+  const [studentList, setStudentList] = useState("");
+  const [studentNames, setStudentNames] = useState([]);
+  const [constraintList, setConstraintList] = useState([]);
+
+  let seatingAssignments = [];
+
+  useEffect(() => {
+    console.log("Current student list: ", studentNames);
+    console.log("Current constraints: ", constraintList);
+  }, [studentNames, constraintList]);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const data = ['Student 1', 'Student 2', 'Student 3', 'The Life of Pi'];
+  const handleCloseToast = () => setShowToast(false);
+  const handleShowToast = () => setShowToast(true);
+  const handleCloseGenerating = () => setShowGenerating(false);
 
   const isIntegerString = (str) => {
     return /^-?\d+$/.test(str);
@@ -38,78 +60,291 @@ const App = () => {
 
   const handleChangeRowInput = (e) => {
     setRowInput(e.target.value);
-  }
+  };
 
   const handleChangeColInput = (e) => {
     setColInput(e.target.value);
-  }
+  };
 
-  const handleGenerate = () => {
-    console.log("Generate button clicked!");
-    console.log("Row Count: " + rowInput);
-    console.log("Column Count: " + colInput);
+  const handleStudentListChange = (e) => {
+    setStudentList(e.target.value);
+  };
 
+  const handleStudentSave = async (e) => {
     try {
-      if (isIntegerString(rowInput) && isIntegerString(colInput)) {
-        setRowCount(rowInput);
-        setColCount(colInput);
+      e.preventDefault();
+      console.log("Save Students clicked!");
+      console.log("Current list: ", studentList);
 
-        console.log("Row Count: " + rowCount);
-        console.log("Column Count: " + colCount);
+      if (studentList.length > 0) {
+        const newPost = {
+          studentList
+        };
+
+        await axios.post('http://localhost:8080/api/studentdatapost', newPost)
+              .then(response => {
+                console.log('Success: ', response.data);
+                setToastMessage('Student list saved!');
+                handleShowToast();
+              })
+              .catch(error => {
+                console.error('ERROR: ', error);
+                throw new Error('Failed to save student list! Please try again.')
+              });
       }
       else {
-        throw new Error('Row and column inputs must be integer values!')
+        throw new Error('No input made.' + '\n' +  'Please input a list of students.');
       }
 
+      await axios.get('http://localhost:8080/api/studentnamesget')
+        .then(response => {
+          console.log('Success: ', response.data);
+          setStudentNames(response.data);
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error ('Failed to retrieve student list! Please try again.');
+        });
+    } catch (error) {
+      console.error('ERROR: ', error);
+      setErrorMessage(error.message);
+      handleShow();
+    }
+  };
+
+  const handleConstraintAdd = (newId) => {
+    console.log("handleConstraintAdd() called!");
+    console.log("Row to be added: ", newId);
+    const newConstraint = {
+      id: newId,
+      constraint: ['', '', ''],
+    };
+
+    setConstraintList((prevConstraintList) => [...prevConstraintList, newConstraint]);
+  }
+
+  const handleConstraintRemove = (i) => {
+    console.log("handleConstraintRemove() called!");
+    console.log("Removing row ", i);
+    setConstraintList(constraintList.filter((constraint) => {return constraint.id !== i}));
+  }
+
+  const handleConstraintUpdate = (idTarget, index, newConstraint) => {
+    console.log("handleConstraintUpdate() called!");
+    console.log("Constraint row key: ", idTarget);
+    console.log("Constraint to be updated: ", index);
+    console.log("New constraint: ", newConstraint);
+
+    setConstraintList(prevConstraintList =>
+      prevConstraintList.map(obj => {
+        if (obj.id === idTarget) {
+          const newConstraintArr = [...obj.constraint];
+          newConstraintArr[index] = newConstraint;
+
+          return {...obj, constraint: newConstraintArr};
+        }
+
+        return obj;
+      })
+    );
+  }
+
+  const handleReset = async () => {
+    try {
+      console.log("Reset button clicked!");
+      setRowInput("");
+      setColInput("");
+
+      setStudentList("");
+      setStudentNames([]);
+
+      const studentResetPost = {
+        studentList
+      };
+
+      await axios.post('http://localhost:8080/api/studentdatapost', studentResetPost)
+        .then(response => {
+          console.log('Success: ', response.data);
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error('Failed to reset student list! Please try again.')
+        });
+
+      if (tabRef.current) {
+        tabRef.current?.clearConstraints();
+      }
+      else {
+        throw new Error('Invalid Tab reference!');
+      }
+
+      setConstraintList([]);
+      const constraintsPost = [];
+
+      await axios.post('http://localhost:8080/api/constraintspost', constraintsPost)
+        .then(response => {
+          console.log('Success: ', response.data);
+          console.log("Constraints successfully reset");
+        })
+        .catch(error => {
+          console.error('ERROR: ', error);
+          throw new Error('Failed to send constraints! Please try again.');
+        });
+
+      setShowChart(false);
       if (canvasRef.current) {
-        canvasRef.current.generateChart();
+        canvasRef.current?.generateChart([]);
       }
       else {
         throw new Error('Invalid Canvas reference! Please check and fix the bug.')
       }
+
+      setToastMessage('Inputs successfully reset!');
+      handleShowToast();
+
     } catch (error) {
       console.log(error.message);
       setErrorMessage(error.message);
       handleShow();
     }
+  };
 
+  const handleGenerate = async () => {
+    console.log("Generate button clicked!");
+    console.log("Row Count: " + rowInput);
+    console.log("Column Count: " + colInput);
+
+    const constraintsPost = [];
+
+    try {
+      if (studentNames.length < 1) {
+        throw new Error('No students available.' + '\n' + 'Make sure to click "Save Students" after inputting the student list.');
+      }
+
+      setShowGenerating(true);
+      if (constraintList.length > 0) {
+        setGeneratingMessage("Sending constraints...");
+        for (let i = 0; i < constraintList.length; i++) {
+          console.log("Current constraint: ", constraintList[i].constraint);
+          constraintsPost.push(constraintList[i].constraint);
+        }
+
+        console.log("Constraint list to be sent: ", constraintsPost);
+        await axios.post('http://localhost:8080/api/constraintspost', constraintsPost)
+          .then(response => {
+            console.log('Success: ', response.data);
+          })
+          .catch(error => {
+            console.error('ERROR: ', error);
+            throw new Error('Failed to send constraints! Please try again.');
+          });
+      }
+
+      setGeneratingMessage("Sending row and column inputs...");
+      if (isIntegerString(rowInput) && isIntegerString(colInput)) {
+        console.log("Row Input: " + rowInput);
+        console.log("Column Input: " + colInput);
+
+        const newRowColCountPost = {
+          rows: rowInput,
+          cols: colInput,
+        };
+
+        await axios.post('http://localhost:8080/api/rowcolcountpost', newRowColCountPost)
+          .then(response => {
+            console.log('Success: ', response.data);
+            setRowCount(rowInput);
+            setColCount(colInput);
+          })
+          .catch(error => {
+              console.error('ERROR: ', error);
+              throw new Error('Failed to send row and column inputs! Please try again.');
+          });
+      }
+      else {
+        throw new Error('Row and column inputs must be integer values!');
+      }
+
+      setGeneratingMessage("Generating seating assignments...");
+      await axios.get('http://localhost:8080/api/seatassignmentsget')
+      .then(response => {
+        setShowGenerating(false);
+        console.log('Success: ', response.data);
+        seatingAssignments = response.data;
+      })
+      .catch(error => {
+        console.error('ERROR: ', error);
+        throw new Error('Seating assignment retrieval failed! Please check your constraints and try again.')
+      });
+
+      console.log("Seating order: ", seatingAssignments);
+      setShowChart(true);
+      if (canvasRef.current) {
+        canvasRef.current?.generateChart(seatingAssignments);
+      }
+      else {
+        throw new Error('Invalid Canvas reference! Please check and fix the bug.')
+      }
+
+    } catch (error) {
+      setShowGenerating(false);
+      console.log(error.message);
+      setErrorMessage(error.message);
+      handleShow();
+    }
   };
 
   return (
     <div className="App">
-      <h1>Hello, World!</h1>
+      <h1>Auto Seater</h1>
 
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon data={data} />
+            <TabStudCon ref={tabRef} value={studentList} studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
+              constraintAddHandler={handleConstraintAdd} constraintRemoveHandler={handleConstraintRemove}
+              constraintUpdateHandler={handleConstraintUpdate} data={studentNames} />
           </Col>
           <Col className="justify-content-md-center">
             <div className="seating-chart-container">
-              <SeatingChartCanvas ref={canvasRef} rowCount={rowCount} colCount={colCount} width={canvasWidth} height={canvasHeight} />
+              <SeatingChartCanvas ref={canvasRef} show={showChart} rowCount={rowCount} colCount={colCount}
+                width={canvasWidth} height={canvasHeight} />
             </div>
           </Col>
         </Row>
         <Row className="fixed-bottom pt-2 pb-2" style={{ backgroundColor: '#efefef' }}>
           <Col xs={4}>
-            <Button variant="primary" size="lg">Export Chart</Button>
+            {/* Export Chart feature to be implemented... */}
+            {/* <Button variant="primary" size="lg">Export Chart</Button> */}
           </Col>
           <Col xs={2} style={{ marginLeft: '80px' }}>
             <InputGroup>
               <InputGroup.Text>Rows</InputGroup.Text>
-              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }} onChange={handleChangeRowInput} />
+              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }}
+                value={rowInput} onChange={handleChangeRowInput} />
               <InputGroup.Text>Cols</InputGroup.Text>
-              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }} onChange={handleChangeColInput} />
+              <Form.Control as="textarea" size="md" className="TextArea" style={{ height: '50px', textAlign: 'center' }}
+                value={colInput} onChange={handleChangeColInput} />
             </InputGroup>
           </Col>
           <Col>
-            <Button variant="secondary" size="lg" style={{ marginRight: "8px" }}>Reset</Button>
+            <Button variant="secondary" size="lg" style={{ marginRight: "8px" }} onClick={handleReset}>Reset</Button>
             <Button variant="primary" size="lg" onClick={handleGenerate}>Generate</Button>
           </Col>
         </Row>
       </Container>
 
+      <GeneratingAlert show={showGenerating} onHide={handleCloseGenerating} message={generatingMessage} />
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
+
+      <ToastContainer className="p-3" position="bottom-start">
+        <Toast show={showToast} onClose={handleCloseToast} delay={5000} autohide>
+          <Toast.Header>
+            Alert
+          </Toast.Header>
+          <Toast.Body>{toastMessage}</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
 
   );

@@ -1,30 +1,49 @@
-import React, { useState } from 'react';
-
 import Button from 'react-bootstrap/button';
 import Form from 'react-bootstrap/Form';
 import './Tab.css';
 
 const ConstraintRow = (props) => {
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
+    const constraintChangeHandler = props.constraintChangeHandler;
+
+    const conditionOpts = [
+        { value: '=', label: "next to" },
+        { value: '!=', label: "away from" },
+    ];
 
     const key = props.key;
+    const id = props.id;
     const data = props.data;
 
-    console.log(key);
+    // 0 = val1, 1 = condition, 2 = val2
+    const updateConstraintValue = (index, newInput) => {
+        console.log("updateConstraintValue() called!");
+        console.log("Updating index ", index, " with ", newInput);
+
+        constraintChangeHandler(id, index, newInput);
+    };
 
     return (
         <div key={key} className="d-flex mb-3 justify-content-between">
-            <Form.Select className="select-dim-custom" size="sm" value={val1} onChange={e => setVal1(e.target.value)}>
+            <Form.Select className="select-dim-custom" size="sm"
+            onChange={(e) => {
+                updateConstraintValue(0, e.target.value);
+            }}>
                 {
                     data.map(opt => <option>{opt}</option>)
                 }
             </Form.Select>
-            <Form.Select className="select-middle-dim-custom" size="sm">
-                <option>next to</option>
-                <option>away from</option>
+            <Form.Select className="select-middle-dim-custom" size="sm"
+            onChange={(e) => {
+                updateConstraintValue(1, e.target.value);
+            }}>
+                {
+                    conditionOpts.map(opt => <option value={opt.value}>{opt.label}</option>)
+                }
             </Form.Select>
-            <Form.Select className="select-dim-custom" size="sm" value={val2} onChange={e => setVal2(e.target.value)}>
+            <Form.Select className="select-dim-custom" size="sm"
+            onChange={(e) => {
+                updateConstraintValue(2, e.target.value);
+            }}>
                 {
                     data.map(opt => <option>{opt}</option>)
                 }
