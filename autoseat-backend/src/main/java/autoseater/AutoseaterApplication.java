@@ -35,8 +35,6 @@ public class AutoseaterApplication {
     }
 
     public String[][] assignSeats() {
-        // List<String[]> seatNames = new ArrayList<String[]>();
-        // List<Student> studentOrder = new ArrayList<Student>();
         String[][] seatNames = new String[countRows][countCols];
 
         String seatOrder[] = new String[countRows * countCols];
@@ -56,18 +54,14 @@ public class AutoseaterApplication {
                 int studentSeatId = seats[i][j].getValue();
                 System.out.println("Student seat ID: " + studentSeatId);
                 Student currentStudent = getStudentById(students, studentSeatId);
-                // seatCols[j] = getStudentNameById(students, seats[i][j].getValue());
                 seatCols[j] = getStudentNameById(students, studentSeatId);
-                // seatCols[j] = currentStudent.getName();
                 currentStudent.setSeatNum(seatIndex);
                 seatOrder[seatIndex] = seatCols[j];
                 seatIndex++;
             }
-            // seatNames.add(seatCols);
             seatNames[i] = seatCols;
         }
 
-        // return seatOrder;
         return seatNames;
     }
 
