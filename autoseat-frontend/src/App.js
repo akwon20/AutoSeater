@@ -310,7 +310,8 @@ const App = () => {
         </Row>
         <Row className="fixed-bottom pt-2 pb-2" style={{ backgroundColor: '#efefef' }}>
           <Col xs={4}>
-            <Button variant="primary" size="lg">Export Chart</Button>
+            {/* Export Chart feature to be implemented... */}
+            {/* <Button variant="primary" size="lg">Export Chart</Button> */}
           </Col>
           <Col xs={2} style={{ marginLeft: '80px' }}>
             <InputGroup>
