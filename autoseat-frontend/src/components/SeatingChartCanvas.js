@@ -67,8 +67,6 @@ const SeatingChartCanvas = forwardRef((props, ref) => {
                     alignContent: 'center'
                     }}
                     md={2}>
-                    {/* Row {row} Col {col} */}
-                    {/* {seatOrder[seatIndex]} */}
                     {seats[row][col]}
                 </Col>
             );
