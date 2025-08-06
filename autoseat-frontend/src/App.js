@@ -21,8 +21,9 @@ import './components/SeatingChartContainer.css';
 const App = () => {
   const [show, setShow] = useState(false);
   const [showGenerating, setShowGenerating] = useState(false);
-  const [showSaved, setShowSaved] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [showChart, setShowChart] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [generatingMessage, setGeneratingMessage] = useState('');
 
@@ -49,8 +50,8 @@ const App = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleCloseSaved = () => setShowSaved(false);
-  const handleShowSaved = () => setShowSaved(true);
+  const handleCloseToast = () => setShowToast(false);
+  const handleShowToast = () => setShowToast(true);
   const handleCloseGenerating = () => setShowGenerating(false);
 
   const isIntegerString = (str) => {
@@ -83,7 +84,8 @@ const App = () => {
         await axios.post('http://localhost:8080/api/studentdatapost', newPost)
               .then(response => {
                 console.log('Success: ', response.data);
-                handleShowSaved();
+                setToastMessage('Student list saved!');
+                handleShowToast();
               })
               .catch(error => {
                 console.error('ERROR: ', error);
@@ -147,7 +149,6 @@ const App = () => {
     );
   }
 
-
   const handleReset = async () => {
     try {
       console.log("Reset button clicked!");
@@ -197,6 +198,9 @@ const App = () => {
       else {
         throw new Error('Invalid Canvas reference! Please check and fix the bug.')
       }
+
+      setToastMessage('Inputs successfully reset!');
+      handleShowToast();
 
     } catch (error) {
       console.log(error.message);
@@ -334,11 +338,11 @@ const App = () => {
       <CustomErrorModal show={show} onHide={handleClose} onClick={handleClose} message={errorMessage} />
 
       <ToastContainer className="p-3" position="bottom-start">
-        <Toast show={showSaved} onClose={handleCloseSaved} delay={5000} autohide>
+        <Toast show={showToast} onClose={handleCloseToast} delay={5000} autohide>
           <Toast.Header>
             Alert
           </Toast.Header>
-          <Toast.Body>Student list saved!</Toast.Body>
+          <Toast.Body>{toastMessage}</Toast.Body>
         </Toast>
       </ToastContainer>
     </div>
