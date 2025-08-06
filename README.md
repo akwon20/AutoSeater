@@ -1,4 +1,4 @@
-# AutoSeater Application
+# Auto Seater Application
 A Java Application that generates a rectangular seating chart for an elementary school carpet-based scenario.
 Users can input a specific list of student names along with their desired restrictions (who cannot sit next to whom)
 and adjacencies (who must sit next to whom) to automatically generate a seating chart and reallocate the amount of time
