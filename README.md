@@ -4,6 +4,8 @@ Users can input a specific list of student names along with their desired restri
 and adjacencies (who must sit next to whom) to automatically generate a seating chart and reallocate the amount of time
 and effort required to other tasks teachers deal with.
 
+<img width="1440" height="765" alt="Screenshot 2025-08-05 at 6 08 34 PM" src="https://github.com/user-attachments/assets/c6ca4f35-5619-4a59-b378-d6fc3dbd473b" />
+
 ## Known Issues
 
 
