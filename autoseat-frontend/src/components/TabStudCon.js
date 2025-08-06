@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useImperativeHandle, forwardRef } from 'react';
 
 import Button from 'react-bootstrap/button';
 import Tab from 'react-bootstrap/Tab';
@@ -9,7 +9,7 @@ import ConstraintRow from './ConstraintRow.js';
 import './Tab.css';
 import './TextArea.css';
 
-const TabStudCon = (props) => {
+const TabStudCon = forwardRef((props, ref) => {
     const value = props.value;
     const data = props.data;
 
@@ -21,6 +21,10 @@ const TabStudCon = (props) => {
     const constraintUpdateHandler = props.constraintUpdateHandler;
 
     const [constraintRows, setConstraintRows] = useState([]);
+
+    useImperativeHandle(ref, () => ({
+        clearConstraints: resetConstraintRows
+    }));
 
     const addConstraintRow = () => {
         const newId = Date.now();
@@ -41,6 +45,11 @@ const TabStudCon = (props) => {
 
         setConstraintRows(constraintRows.filter((constraintRow) => {return constraintRow.id !== id}));
         constraintRemoveHandler(id);
+    }
+
+    const resetConstraintRows = () => {
+        console.log("Resetting constraint rows...");
+        setConstraintRows([]);
     }
 
     return (
@@ -76,6 +85,6 @@ const TabStudCon = (props) => {
             </Tab>
         </Tabs>
     );
-};
+});
 
 export default TabStudCon;

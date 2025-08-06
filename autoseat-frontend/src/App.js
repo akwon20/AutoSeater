@@ -29,6 +29,7 @@ const App = () => {
   const canvasWidth = "450px";
   const canvasHeight = "595px";
   const canvasRef = useRef();
+  const tabRef = useRef();
 
   const [rowInput, setRowInput] = useState();
   const [colInput, setColInput] = useState();
@@ -42,8 +43,9 @@ const App = () => {
   let seatingAssignments = [];
 
   useEffect(() => {
+    console.log("Current student list: ", studentNames);
     console.log("Current constraints: ", constraintList);
-  }, [constraintList]);
+  }, [studentNames, constraintList]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -151,17 +153,13 @@ const App = () => {
       console.log("Reset button clicked!");
       setRowInput("");
       setColInput("");
-      // setRowCount();
-      // setColCount();
 
       setStudentList("");
       setStudentNames([]);
-      setConstraintList([]);
 
       const studentResetPost = {
         studentList
       };
-
 
       await axios.post('http://localhost:8080/api/studentdatapost', studentResetPost)
         .then(response => {
@@ -172,17 +170,14 @@ const App = () => {
           throw new Error('Failed to reset student list! Please try again.')
         });
 
-      await axios.get('http://localhost:8080/api/studentnamesget')
-        .then(response => {
-          console.log('Success: ', response.data);
-          setStudentNames(response.data);
-          console.log("Student names successfully reset");
-        })
-        .catch(error => {
-          console.error('ERROR: ', error);
-          throw new Error ('Failed to retrieve student list! Please try again.');
-        });
+      if (tabRef.current) {
+        tabRef.current?.clearConstraints();
+      }
+      else {
+        throw new Error('Invalid Tab reference!');
+      }
 
+      setConstraintList([]);
       const constraintsPost = [];
 
       await axios.post('http://localhost:8080/api/constraintspost', constraintsPost)
@@ -302,7 +297,7 @@ const App = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <TabStudCon value={studentList} studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
+            <TabStudCon ref={tabRef} value={studentList} studentListChangeHandler={handleStudentListChange} saveStudentDataHandler={handleStudentSave}
               constraintAddHandler={handleConstraintAdd} constraintRemoveHandler={handleConstraintRemove}
               constraintUpdateHandler={handleConstraintUpdate} data={studentNames} />
           </Col>
